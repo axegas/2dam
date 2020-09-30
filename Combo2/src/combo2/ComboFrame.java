@@ -6,8 +6,6 @@
 package combo2;
 
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -66,8 +64,7 @@ public class ComboFrame extends JFrame {
         comboCities.addItemListener(e -> lab2.setText(nameCities[comboCities.getSelectedIndex()] + " selected."));
 
         nameFriends = new String[]{"Black", "Blue", "Cyan", "Dark gray", "Gray", "Green", "Light gray", "Magenta", "Orange", "Pink", "Red", "White", "Yellow"};
-        listFriends = new JList(nameFriends);
-        
+        listFriends = new JList(nameFriends);        
         
         listFriends.setVisibleRowCount(5);
         listFriends.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
