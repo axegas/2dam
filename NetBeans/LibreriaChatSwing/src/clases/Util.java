@@ -19,15 +19,15 @@ public class Util {
     private static final int PUERTO_SERVIDOR = 9000;
     private static final String IP_SERVIDOR = getIp();
 
-    public static int getPUERTO_CLIENTE() {
+    public static int PUERTO_CLIENTE() {
         return PUERTO_CLIENTE;
     }
 
-    public static int getPUERTO_SERVIDOR() {
+    public static int PUERTO_SERVIDOR() {
         return PUERTO_SERVIDOR;
     }
 
-    public static String getIP_SERVIDOR() {
+    public static String IP_SERVIDOR() {
         return IP_SERVIDOR;
     }
 

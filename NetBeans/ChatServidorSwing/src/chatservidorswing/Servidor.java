@@ -15,6 +15,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 /**
@@ -51,10 +52,11 @@ public class Servidor extends JFrame {
         setBounds(300, 300, 400, 400);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("Servidor");
-        //setLayout(new GridLayout(3, 1, 2, 2));
 
         chat = new JTextArea("");
-        add(chat);
+        chat.setEditable(false);
+        JScrollPane sp = new JScrollPane(chat);
+        add(sp);
     }
 
     private void threading() {
@@ -63,20 +65,20 @@ public class Servidor extends JFrame {
         Paquete paqueteEntrada;
 
         try {
-            servidorCliente = new ServerSocket(Util.getPUERTO_SERVIDOR());
+            servidorCliente = new ServerSocket(Util.PUERTO_SERVIDOR());
             while (true) {
                 socketRecibido = servidorCliente.accept();
                 ObjectInputStream datosEntrada = new ObjectInputStream(socketRecibido.getInputStream());
                 paqueteEntrada = (Paquete) datosEntrada.readObject();
                 if (paqueteEntrada.getDestino() != null) {
                     chat.append(paqueteEntrada + " ***enviado a*** " + paqueteEntrada.getDestino() + "\n");
-                    paqueteEntrada.send(paqueteEntrada.getDestino().getIp(), Util.getPUERTO_CLIENTE());                    
+                    paqueteEntrada.send(paqueteEntrada.getDestino().getIp(), Util.PUERTO_CLIENTE());                    
                 } else {
                     usuarios.add(paqueteEntrada.getOrigen());
                     Paquete p = new Paquete(null, null, "");
                     p.setUsuarios(usuarios);
                     for (int i = 0; i < usuarios.size(); i++) {
-                        p.send(usuarios.get(i).getIp(), Util.getPUERTO_CLIENTE());
+                        p.send(usuarios.get(i).getIp(), Util.PUERTO_CLIENTE());
                     }
                     chat.append("Usuario " + paqueteEntrada.getOrigen() + " conectado.\n");
                 }
