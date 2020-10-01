@@ -6,11 +6,13 @@
 package chatservidorswing;
 
 import clases.Paquete;
+import clases.Usuario;
 import clases.Util;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JTextArea;
@@ -19,10 +21,11 @@ import javax.swing.JTextArea;
  *
  * @author peixe
  */
-public class Servidor extends JFrame{
+public class Servidor extends JFrame {
 
     private Thread thread;
     private JTextArea chat;
+    private ArrayList<Usuario> usuarios;
 
     /**
      * @param args the command line arguments
@@ -33,9 +36,9 @@ public class Servidor extends JFrame{
     }
 
     public Servidor() {
+        usuarios = new ArrayList<>();
         initComponents();
         iniciar();
-        
     }
 
     private void iniciar() {
@@ -43,16 +46,15 @@ public class Servidor extends JFrame{
         thread.setDaemon(true);
         thread.start();
     }
-    
-    private void initComponents(){
+
+    private void initComponents() {
         setBounds(300, 300, 400, 400);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("Servidor");
         //setLayout(new GridLayout(3, 1, 2, 2));
-        
+
         chat = new JTextArea("");
         add(chat);
-        
     }
 
     private void threading() {
@@ -66,8 +68,18 @@ public class Servidor extends JFrame{
                 socketRecibido = servidorCliente.accept();
                 ObjectInputStream datosEntrada = new ObjectInputStream(socketRecibido.getInputStream());
                 paqueteEntrada = (Paquete) datosEntrada.readObject();
-                chat.append(paqueteEntrada + "\n");
-                paqueteEntrada.send(paqueteEntrada.getDestino().getIp(), Util.getPUERTO_CLIENTE());
+                if (paqueteEntrada.getDestino() != null) {
+                    chat.append(paqueteEntrada + " ***enviado a*** " + paqueteEntrada.getDestino() + "\n");
+                    paqueteEntrada.send(paqueteEntrada.getDestino().getIp(), Util.getPUERTO_CLIENTE());                    
+                } else {
+                    usuarios.add(paqueteEntrada.getOrigen());
+                    Paquete p = new Paquete(null, null, "");
+                    p.setUsuarios(usuarios);
+                    for (int i = 0; i < usuarios.size(); i++) {
+                        p.send(usuarios.get(i).getIp(), Util.getPUERTO_CLIENTE());
+                    }
+                    chat.append("Usuario " + paqueteEntrada.getOrigen() + " conectado.\n");
+                }
                 socketRecibido.close();
             }
         } catch (ClassNotFoundException | IOException ex) {

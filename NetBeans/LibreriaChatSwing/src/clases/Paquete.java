@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.Socket;
+import java.util.ArrayList;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -20,6 +21,7 @@ public class Paquete implements Serializable {
     private final Usuario origen;
     private final Usuario destino;
     private final String mensaje;
+    private ArrayList<Usuario> usuarios;
     
     public Paquete(Usuario origen, Usuario destino, String mensaje){
         this.origen = origen;
@@ -41,7 +43,15 @@ public class Paquete implements Serializable {
     
     @Override
     public String toString(){
-        return origen.getNombre() + ": " + mensaje;
+        return origen + ": " + mensaje;
+    }
+    
+    public void setUsuarios(ArrayList<Usuario> usuarios){
+        this.usuarios = usuarios;
+    }
+    
+    public ArrayList<Usuario> getUsuarios(){
+        return usuarios;
     }
     
     public void send(String ip, int puerto) throws IOException{

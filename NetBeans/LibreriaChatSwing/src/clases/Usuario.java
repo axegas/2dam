@@ -32,8 +32,9 @@ public class Usuario  implements Serializable{
     public String getIp() {
         return ip;
     }
-
-    public String getNombre() {
+    
+    @Override
+    public String toString(){
         return nombre;
     }
 }

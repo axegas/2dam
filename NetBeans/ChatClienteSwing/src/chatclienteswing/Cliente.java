@@ -13,7 +13,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -27,18 +30,26 @@ import javax.swing.JTextField;
 public class Cliente extends JFrame {
 
     private final Usuario user;
+    private Usuario destino;
+
     private Thread thread;
     private JPanel cabecera;
     private JPanel cuerpo;
     private JPanel mensaje;
 
     private JTextArea chat;
-    private JTextField ip;
     private JTextField txtMensaje;
+    private JComboBox listaUsers;
 
-    public Cliente(Usuario user) {
+    private ArrayList<Usuario> usuarios;
+    private Usuario[] usuariosArray;
+
+    public Cliente(Usuario user) throws IOException {
         this.user = user;
+        this.destino = user;
+        usuarios = new ArrayList<>();
         initComponents();
+        conectar();
         iniciar();
     }
 
@@ -46,6 +57,12 @@ public class Cliente extends JFrame {
         thread = new Thread(this::threading);
         thread.setDaemon(true);
         thread.start();
+    }
+
+    private void conectar() throws IOException {
+        Usuario dest = null;
+        Paquete p = new Paquete(user, dest, "");
+        p.send(Util.getIP_SERVIDOR(), Util.getPUERTO_SERVIDOR());
     }
 
     private void initComponents() {
@@ -62,10 +79,11 @@ public class Cliente extends JFrame {
         add(cuerpo);
         add(mensaje);
 
-        JLabel nombre = new JLabel("Nombre: " + user.getNombre());
-        ip = new JTextField();
+        JLabel nombre = new JLabel("Nombre: " + user);
+        listaUsers = new JComboBox();
+
         cabecera.add(nombre);
-        cabecera.add(ip);
+        cabecera.add(listaUsers);
 
         chat = new JTextArea("");
         cuerpo.add(chat);
@@ -76,21 +94,19 @@ public class Cliente extends JFrame {
         JButton enviar = new JButton("Enviar");
         mensaje.add(enviar);
 
-        enviar.addActionListener(e -> {
-            try {
-                enviar();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        });
+        enviar.addActionListener(e -> enviar() );
+
+        listaUsers.addItemListener(e -> destino = (Usuario) listaUsers.getSelectedItem());
     }
 
-    private void enviar() throws IOException {
-        Usuario destino = new Usuario();
-        destino.setIp(ip.getText());
-        Paquete p = new Paquete(user, destino, txtMensaje.getText());
-        chat.append("Yo: " + txtMensaje.getText() + "\n");
-        p.send(Util.getIP_SERVIDOR(), Util.getPUERTO_SERVIDOR());
+    private void enviar() {
+        try {
+            Paquete p = new Paquete(user, destino, txtMensaje.getText());
+            chat.append("Yo: " + txtMensaje.getText() + "\n");
+            p.send(Util.getIP_SERVIDOR(), Util.getPUERTO_SERVIDOR());
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     private void threading() {
@@ -104,7 +120,14 @@ public class Cliente extends JFrame {
                 socketRecibido = servidorCliente.accept();
                 ObjectInputStream datosEntrada = new ObjectInputStream(socketRecibido.getInputStream());
                 paqueteEntrada = (Paquete) datosEntrada.readObject();
-                chat.append(paqueteEntrada + "\n");
+                if (paqueteEntrada.getOrigen() != null) {
+                    chat.append(paqueteEntrada + "\n");
+                } else {
+                    usuarios = paqueteEntrada.getUsuarios();
+                    usuariosArray = new Usuario[usuarios.size()];
+                    usuariosArray = usuarios.toArray(usuariosArray);
+                    listaUsers.setModel(new DefaultComboBoxModel(usuariosArray));
+                }
                 socketRecibido.close();
             }
         } catch (ClassNotFoundException | IOException ex) {
