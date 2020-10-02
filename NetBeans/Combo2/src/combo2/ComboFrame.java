@@ -7,6 +7,7 @@ package combo2;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -29,7 +30,7 @@ public class ComboFrame extends JFrame {
     private JList listFriends;
 
     private JLabel labFriends;
-    
+
     public ComboFrame() {
         initComponents();
     }
@@ -64,15 +65,15 @@ public class ComboFrame extends JFrame {
         comboCities.addItemListener(e -> lab2.setText(nameCities[comboCities.getSelectedIndex()] + " selected."));
 
         nameFriends = new String[]{"Black", "Blue", "Cyan", "Dark gray", "Gray", "Green", "Light gray", "Magenta", "Orange", "Pink", "Red", "White", "Yellow"};
-        listFriends = new JList(nameFriends);        
-        
+        listFriends = new JList(nameFriends);
+
         listFriends.setVisibleRowCount(5);
         listFriends.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         friends.add(new JScrollPane(listFriends));
-        
+
         labFriends = new JLabel();
         friends.add(labFriends);
-        
+        /*
         listFriends.addListSelectionListener( e -> {
             int[] v = listFriends.getSelectedIndices();            
             String s = "";
@@ -83,6 +84,19 @@ public class ComboFrame extends JFrame {
                 }                
             }
             labFriends.setText("My friends: " + s);
+        });*/
+
+        listFriends.addListSelectionListener(e -> {
+            List<String> v = listFriends.getSelectedValuesList();
+            String s = "";
+            for (int i = 0; i < v.size(); i++) {
+                s += v.get(i);
+                if (i < v.size() - 1) {
+                    s += ", ";
+                }
+            }
+            labFriends.setText("My friends: " + s);
         });
+
     }
 }
