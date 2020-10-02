@@ -88,14 +88,7 @@ public class ComboFrame extends JFrame {
 
         listFriends.addListSelectionListener(e -> {
             List<String> v = listFriends.getSelectedValuesList();
-            String s = "";
-            for (int i = 0; i < v.size(); i++) {
-                s += v.get(i);
-                if (i < v.size() - 1) {
-                    s += ", ";
-                }
-            }
-            labFriends.setText("My friends: " + s);
+            labFriends.setText("My friends: " + v);
         });
 
     }
