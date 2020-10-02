@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">HolaMundo3</string>
+    <string name="escribe">Escribe</string>
+    <string name="saludo">Saludo</string>
+    <string name="pulsar">Pulsar</string>
+    <string name="volver">Volver</string>
+</resources>

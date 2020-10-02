@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ProySuma</string>
+    <string name="btnSuma">Suma</string>
+    <string name="btnVolver">Volver</string>
+</resources>
