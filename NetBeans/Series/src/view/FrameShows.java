@@ -60,7 +60,17 @@ public class FrameShows extends JFrame {
         panel3.add(b6);
         panel3.add(b7);
         
+        l1 = new JLabel("Title");
+        l2 = new JLabel("Screenwriter");
+        l3 = new JLabel("Seasons");
+        l4 = new JLabel("Genre");
+        l5 = new JLabel("Seen Seasons");
         
+        t1 = new JTextField(50);
+        t2 = new JTextField(50);
+        t3 = new JTextField(50);
+        t4 = new JTextField(50);
+        t5 = new JTextField(50);
         
     }
 
