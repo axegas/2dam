@@ -36,5 +36,10 @@ public class ClasesIterators {
             String aux = iter.next();
             System.out.println(aux);
         }
+        
+        //forma 4: for-loop
+        for(String aux : str){
+            System.out.println(aux);
+        }
     }
 }
