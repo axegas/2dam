@@ -18,23 +18,24 @@ import java.io.ObjectOutputStream;
  */
 public class Access {
 
-    private static final File f = new File("series.dat");
+    private static final File file = new File("series.dat");
 
     public static void saveLS(ListShow ls) {
         try {
-            FileOutputStream fos = new FileOutputStream(f);
+            FileOutputStream fos = new FileOutputStream(file);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(ls);
             oos.close();
         } catch (IOException ex) {
             System.out.println("Error saving file");
+            //ex.printStackTrace();
         }
     }
 
     public static ListShow loadLS() {
         ListShow ls = new ListShow();
         try {            
-            FileInputStream fis = new FileInputStream(f);
+            FileInputStream fis = new FileInputStream(file);
             ObjectInputStream ois = new ObjectInputStream(fis);
             ls = (ListShow) ois.readObject();
             ois.close();

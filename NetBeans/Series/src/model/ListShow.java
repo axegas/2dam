@@ -13,6 +13,7 @@ import java.util.ArrayList;
  * @author axegas
  */
 public class ListShow implements Serializable {
+
     private final ArrayList<Show> shows;
 
     public ListShow() {
@@ -22,19 +23,27 @@ public class ListShow implements Serializable {
     public ArrayList<Show> getShows() {
         return shows;
     }
+    
+    public void deleteShow(int pos){
+        shows.remove(pos);
+    }
 
     public void setShow(Show s) {
         this.shows.add(s);
     }
-    
-    public int longitude(){
+
+    public Show getShow(int pos) {
+        return shows.get(pos);
+    }
+
+    public int longitude() {
         return shows.size();
     }
 
     @Override
     public String toString() {
         String str = "";
-        for(int i=0;i<shows.size();i++){
+        for (int i = 0; i < shows.size(); i++) {
             str += shows.get(i) + "\n";
         }
         return str;

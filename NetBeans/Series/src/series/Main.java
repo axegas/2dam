@@ -5,7 +5,7 @@
  */
 package series;
 
-import model.*;
+import controller.Controller;
 import view.FrameShows;
 
 /**
@@ -19,21 +19,11 @@ public class Main {
      */
     public static void main(String[] args) {
 
-        ListShow ls = new ListShow();
-
-        Show s = new Show("Braking Bad", "Vicente Gilligan", 5, "Comedy drama", 5);
-        //ls.setShow(s);
-
-        s = new Show("Game of Thrones", "David Benioff", 6, "Drama", 6);
-        //ls.setShow(s);
-
-        //Access.saveLS(ls);
-        ls = Access.loadLS();
-        System.out.println(ls);
         
-        FrameShows fs = new FrameShows();
+        
+        
+        FrameShows fs = new FrameShows(new Controller());
         fs.setVisible(true);
-        
 
     }
 
