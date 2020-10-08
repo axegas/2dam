@@ -37,9 +37,12 @@ public class FrameShows extends JFrame {
         initComponents();
         if (control.getPos() == -1) {
             setButtons(false);
+            btnInsert.setEnabled(true);
+            updating(new Show());
         } else {
-            updating(control.getShow());
+            updating(control.getShow());            
         }
+        setTextFields(false);
     }
 
     private void initComponents() {
@@ -92,8 +95,6 @@ public class FrameShows extends JFrame {
         txtGenre = new JTextField(50);
         txtSeen = new JTextField(50);
 
-        setTextFields(false, new Show());
-
         pnlMain.add(lblTitle);
         pnlMain.add(txtTitle);
         pnlMain.add(lblScreenwriter);
@@ -104,15 +105,6 @@ public class FrameShows extends JFrame {
         pnlMain.add(txtGenre);
         pnlMain.add(lblSeen);
         pnlMain.add(txtSeen);
-
-    }
-
-    private void updating(Show s) {
-        txtTitle.setText(s.getName());
-        txtScreenwriter.setText(s.getScreenwriter());
-        txtSeasons.setText(String.valueOf(s.getSeasons()));
-        txtGenre.setText(s.getGenre());
-        txtSeen.setText(String.valueOf(s.getSeasons_seen()));
     }
 
     private void setButtons(boolean state) {
@@ -122,17 +114,27 @@ public class FrameShows extends JFrame {
         btnLast.setEnabled(state);
         btnDelete.setEnabled(state);
         btnUpdate.setEnabled(state);
+        btnInsert.setEnabled(state);
     }
 
-    private void setTextFields(boolean state, Show s) {
+    private void setTextFields(boolean state) {
         txtTitle.setEditable(state);
         txtScreenwriter.setEditable(state);
         txtSeasons.setEditable(state);
         txtGenre.setEditable(state);
         txtSeen.setEditable(state);
-        
-        updating(s);
+
+
     }
+    
+    private void updating(Show s){
+                txtTitle.setText(s.getName());
+        txtScreenwriter.setText(s.getScreenwriter());
+        txtSeasons.setText(String.valueOf(s.getSeasons()));
+        txtGenre.setText(s.getGenre());
+        txtSeen.setText(String.valueOf(s.getSeasons_seen()));
+    }
+    
 
     class ButtonsListener implements ActionListener {
 
@@ -155,6 +157,8 @@ public class FrameShows extends JFrame {
                 s = update();
             }
             updating(s);
+            //setTextFields(true, s);
+            //falta el metodo updating
         }
 
         private Show fillShow() {
@@ -164,21 +168,15 @@ public class FrameShows extends JFrame {
         private Show insert() {
             Show s = new Show();
             if (btnInsert.getText().equals("+")) {
-                txtTitle.setText("");
-                txtScreenwriter.setText("");
-                txtSeasons.setText("");
-                txtGenre.setText("");
-                txtSeen.setText("");
-
                 btnInsert.setText("+++");
                 setButtons(false);
-                setTextFields(true, s);
-
+                btnInsert.setEnabled(true);
+                setTextFields(true);
             } else {
                 btnInsert.setText("+");
                 setButtons(true);
                 s = control.insert(fillShow());
-                setTextFields(false, s);
+                setTextFields(false);
             }
 
             return s;
@@ -188,6 +186,7 @@ public class FrameShows extends JFrame {
             Show s = control.delete();
             if (control.getPos() == -1) {
                 setButtons(false);
+                btnInsert.setEnabled(true);
             }
             return s;
         }
@@ -195,21 +194,16 @@ public class FrameShows extends JFrame {
         private Show update() {
             Show s = control.getShow();
 
-            if (btnUpdate.getText().equals("*")) {
+            if (btnUpdate.getText().equals("*")) {                
                 btnUpdate.setText("***");
-                btnFirst.setEnabled(false);
-                btnPrevious.setEnabled(false);
-                btnNext.setEnabled(false);
-                btnLast.setEnabled(false);
-                btnDelete.setEnabled(false);
-                btnInsert.setEnabled(false);
-                setTextFields(true, s);
+                setButtons(false);
+                btnUpdate.setEnabled(true);
+                setTextFields(true);
             } else {
                 btnUpdate.setText("*");
                 setButtons(true);
-                btnInsert.setEnabled(true);
                 s = control.update(fillShow());
-                setTextFields(false, s);
+                setTextFields(false);
             }
 
             return s;

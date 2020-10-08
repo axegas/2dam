@@ -18,7 +18,7 @@ import java.io.ObjectOutputStream;
  */
 public class Access {
 
-    private static final File file = new File("series.dat");
+    private static final File file = new File("src/data/series.dat");
 
     public static void saveLS(ListShow ls) {
         try {

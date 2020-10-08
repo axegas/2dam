@@ -13,14 +13,13 @@ import model.*;
  */
 public class Controller {
 
-    private ListShow listshow;
+    private final ListShow listshow;
     private int position;
 
     public Controller() {
         position = 0;
         listshow = Access.loadLS();
-        if (listshow.longitude() == 0) {
-            System.out.println("no hay datos");
+        if (listshow.size() == 0) {
             position = -1;
         }
     }
@@ -38,41 +37,47 @@ public class Controller {
     }
 
     public Show next() {
-        if (position != listshow.longitude() - 1) {
+        if (position != listshow.size() - 1) {
             position++;
         }
         return getShow();
     }
 
     public Show last() {
-        position = listshow.longitude() - 1;
+        position = listshow.size() - 1;
         return getShow();
     }
 
     public Show insert(Show s) {
-        listshow.setShow(s);
-        position = listshow.longitude() - 1;
+        listshow.add(s);
+        position = listshow.size() - 1;
         Access.saveLS(listshow);
         return getShow();
     }
 
     public Show delete() {
         Show s = new Show();
-        listshow.deleteShow(position);
-        if (listshow.longitude() == 0) {
+        listshow.remove(position);
+        if (listshow.size() == 0) {
             position = -1;
         } else {
             if (position > 0) {
                 position--;
             }
-            s = listshow.getShow(position);
+            s = listshow.get(position);
         }
         Access.saveLS(listshow);
         return s;
     }
 
-    public Show update() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Show update(Show s) {
+        listshow.get(position).setGenre(s.getGenre());
+        listshow.get(position).setName(s.getName());
+        listshow.get(position).setSeasons(s.getSeasons());
+        listshow.get(position).setScreenwriter(s.getScreenwriter());
+        listshow.get(position).setSeasons_seen(s.getSeasons_seen());
+        Access.saveLS(listshow);
+        return s;
     }
 
     public int getPos() {
@@ -80,15 +85,7 @@ public class Controller {
     }
 
     public Show getShow() {
-        return listshow.getShow(position);
+        return listshow.get(position);
     }
 
-    public Show update(Show s) {
-        listshow.getShow(position).setGenre(s.getGenre());
-        listshow.getShow(position).setName(s.getName());
-        listshow.getShow(position).setSeasons(s.getSeasons());
-        listshow.getShow(position).setScreenwriter(s.getScreenwriter());
-        listshow.getShow(position).setSeasons_seen(s.getSeasons_seen());
-        return s;
-    }
 }

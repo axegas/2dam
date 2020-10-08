@@ -19,24 +19,20 @@ public class ListShow implements Serializable {
     public ListShow() {
         shows = new ArrayList<>();
     }
-
-    public ArrayList<Show> getShows() {
-        return shows;
-    }
     
-    public void deleteShow(int pos){
+    public void remove(int pos){
         shows.remove(pos);
     }
 
-    public void setShow(Show s) {
+    public void add(Show s) {
         this.shows.add(s);
     }
 
-    public Show getShow(int pos) {
+    public Show get(int pos) {
         return shows.get(pos);
     }
 
-    public int longitude() {
+    public int size() {
         return shows.size();
     }
 
