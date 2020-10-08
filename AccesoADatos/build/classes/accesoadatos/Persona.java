@@ -92,7 +92,7 @@ public class Persona {
 
     @Override
     public String toString() {
-        return "{" + "nombre: " + nombre + ", edad: " + edad + ", DNI: " + DNI + ", sexo: " + sexo + ", peso: " + peso + ", altura: " + altura + '}';
+        return "Persona{" + "nombre=" + nombre + ", edad=" + edad + ", DNI=" + DNI + ", sexo=" + sexo + ", peso=" + peso + ", altura=" + altura + '}';
     }
 
     public int calcularIMC() {
