@@ -18,16 +18,16 @@ public class Ejercicio4 {
         System.out.print("Introduce un número: ");
         int num = s.nextInt();
         for (int i = 1; i <= num; i++) {
-            if (i <= 10) {
+            if (i <= num) {
                 System.out.print(i + "\t");
             }
-            if ((i * 2) <= 10) {
+            if ((i * 2) <= num) {
                 System.out.print(i * 2 + "\t");
             }
-            if ((i * 3) <= 10) {
+            if ((i * 3) <= num) {
                 System.out.print(i * 3 + "\t");
             }
-            System.out.println("");
+            System.out.println();
         }
     }
 }

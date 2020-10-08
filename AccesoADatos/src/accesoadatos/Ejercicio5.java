@@ -17,18 +17,18 @@ public class Ejercicio5 {
         Random r = new Random();
         int aux;
         int[] v = new int[15];
-        int j,i;
-        
+        int j, i;
+
         for (i = 0; i < 15; i++) {
             aux = r.nextInt(90) + 1;
-            for(j=0;j<i;j++){
-                if(v[j]==aux){
+            for (j = 0; j < i; j++) {
+                if (v[j] == aux) {
                     break;
                 }
             }
-            if(j==i){
+            if (j == i) {
                 v[i] = aux;
-            }else{
+            } else {
                 i--;
             }
         }
@@ -36,6 +36,8 @@ public class Ejercicio5 {
         for (i = 0; i < 15; i++) {
             System.out.println(v[i]);
         }
+
+
     }
 
 }
