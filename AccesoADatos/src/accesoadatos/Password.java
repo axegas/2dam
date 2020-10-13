@@ -39,7 +39,7 @@ public class Password {
         this.pass = generaPass();
     }
 
-    public String generaPass() {
+    private String generaPass() {
         Random r = new Random();
         String simbolos = "0123456789" + "abcdefghijklmnopqrstuvwxyz" + "abcdefghijklmnopqrstuvwxyz".toUpperCase();
         int num;

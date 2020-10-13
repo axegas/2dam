@@ -76,6 +76,7 @@ public class Controller {
         listshow.get(position).setSeasons(s.getSeasons());
         listshow.get(position).setScreenwriter(s.getScreenwriter());
         listshow.get(position).setSeasons_seen(s.getSeasons_seen());
+        listshow.get(position).setPlatform(s.getPlatform());
         Access.saveLS(listshow);
         return s;
     }

@@ -12,6 +12,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -28,8 +29,10 @@ public class FrameShows extends JFrame {
     private JPanel pnlButtons;
     private JPanel pnlMain;
     private JButton btnFirst, btnPrevious, btnNext, btnLast, btnInsert, btnDelete, btnUpdate;
-    private JLabel lblTitle, lblScreenwriter, lblSeasons, lblGenre, lblSeen;
-    private JTextField txtTitle, txtScreenwriter, txtSeasons, txtGenre, txtSeen;
+    private JLabel lblTitle, lblScreenwriter, lblSeasons, lblGenre, lblSeen, lblPlatform;
+    private JTextField txtTitle, txtScreenwriter, txtSeasons, txtGenre, txtSeen, txtPlatform;
+    private JComboBox cmbPlatform;
+    private String[] platforms;
     private final Controller control;
 
     public FrameShows(Controller control) {
@@ -40,7 +43,7 @@ public class FrameShows extends JFrame {
             btnInsert.setEnabled(true);
             updating(new Show());
         } else {
-            updating(control.getShow());            
+            updating(control.getShow());
         }
         setTextFields(false);
     }
@@ -88,12 +91,23 @@ public class FrameShows extends JFrame {
         lblSeasons = new JLabel("Seasons");
         lblGenre = new JLabel("Genre");
         lblSeen = new JLabel("Seen Seasons");
+        lblPlatform = new JLabel("Platform");
 
         txtTitle = new JTextField(50);
         txtScreenwriter = new JTextField(50);
         txtSeasons = new JTextField(50);
         txtGenre = new JTextField(50);
         txtSeen = new JTextField(50);
+        txtPlatform = new JTextField(50);
+        txtPlatform.setEditable(false);
+
+        platforms = new String[3];
+        platforms[0] = "NETFLIX";
+        platforms[1] = "HBO";
+        platforms[2] = "DISNEY";
+
+        cmbPlatform = new JComboBox(platforms);
+        cmbPlatform.setVisible(false);
 
         pnlMain.add(lblTitle);
         pnlMain.add(txtTitle);
@@ -105,6 +119,9 @@ public class FrameShows extends JFrame {
         pnlMain.add(txtGenre);
         pnlMain.add(lblSeen);
         pnlMain.add(txtSeen);
+        pnlMain.add(lblPlatform);
+        pnlMain.add(txtPlatform);
+        pnlMain.add(cmbPlatform);
     }
 
     private void setButtons(boolean state) {
@@ -123,18 +140,16 @@ public class FrameShows extends JFrame {
         txtSeasons.setEditable(state);
         txtGenre.setEditable(state);
         txtSeen.setEditable(state);
-
-
     }
-    
-    private void updating(Show s){
-                txtTitle.setText(s.getName());
+
+    private void updating(Show s) {
+        txtTitle.setText(s.getName());
         txtScreenwriter.setText(s.getScreenwriter());
         txtSeasons.setText(String.valueOf(s.getSeasons()));
         txtGenre.setText(s.getGenre());
         txtSeen.setText(String.valueOf(s.getSeasons_seen()));
+        txtPlatform.setText(s.getPlatform());
     }
-    
 
     class ButtonsListener implements ActionListener {
 
@@ -157,26 +172,31 @@ public class FrameShows extends JFrame {
                 s = update();
             }
             updating(s);
-            //setTextFields(true, s);
-            //falta el metodo updating
         }
 
         private Show fillShow() {
-            return new Show(txtTitle.getText(), txtScreenwriter.getText(), Integer.parseInt(txtSeasons.getText()), txtGenre.getText(), Integer.parseInt(txtSeen.getText()));
+            return new Show(txtTitle.getText(), txtScreenwriter.getText(), Integer.parseInt(txtSeasons.getText()), txtGenre.getText(), Integer.parseInt(txtSeen.getText()), txtPlatform.getText());
         }
 
         private Show insert() {
             Show s = new Show();
             if (btnInsert.getText().equals("+")) {
-                btnInsert.setText("+++");
-                setButtons(false);
+                btnInsert.setText("+++");                
+                setButtons(false); 
                 btnInsert.setEnabled(true);
                 setTextFields(true);
+                cmbPlatform.setVisible(true);
+                lblPlatform.setVisible(false);
+                txtPlatform.setVisible(false);
             } else {
                 btnInsert.setText("+");
                 setButtons(true);
-                s = control.insert(fillShow());
                 setTextFields(false);
+                cmbPlatform.setVisible(false);
+                lblPlatform.setVisible(true);
+                txtPlatform.setVisible(true);
+                txtPlatform.setText(cmbPlatform.getSelectedItem() + "");
+                s = control.insert(fillShow());
             }
 
             return s;
@@ -193,17 +213,23 @@ public class FrameShows extends JFrame {
 
         private Show update() {
             Show s = control.getShow();
-
-            if (btnUpdate.getText().equals("*")) {                
+            if (btnUpdate.getText().equals("*")) {
                 btnUpdate.setText("***");
                 setButtons(false);
                 btnUpdate.setEnabled(true);
                 setTextFields(true);
+                cmbPlatform.setVisible(true);
+                lblPlatform.setVisible(false);
+                txtPlatform.setVisible(false);
             } else {
                 btnUpdate.setText("*");
                 setButtons(true);
-                s = control.update(fillShow());
                 setTextFields(false);
+                txtPlatform.setText(cmbPlatform.getSelectedItem() + "");
+                cmbPlatform.setVisible(false);
+                lblPlatform.setVisible(true);
+                txtPlatform.setVisible(true);
+                s = control.update(fillShow());
             }
 
             return s;
