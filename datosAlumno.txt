@@ -1,0 +1,2 @@
+Nombre: Axel Perez Gaspar
+GitHub: https://github.com/axegas/2dam.git (dentro del github, hay una carpeta llamada "AndroidStudioProyects")
