@@ -38,6 +38,7 @@ public class FrameShows extends JFrame {
     public FrameShows(Controller control) {
         this.control = control;
         initComponents();
+        //poner la primera serie en la plantilla
         if (control.getPos() == -1) {
             setButtons(false);
             btnInsert.setEnabled(true);
@@ -174,6 +175,13 @@ public class FrameShows extends JFrame {
             updating(s);
         }
 
+        public void actualizaPlatforms(boolean state) {
+            setTextFields(state);
+            cmbPlatform.setVisible(state);
+            lblPlatform.setVisible(!state);
+            txtPlatform.setVisible(!state);
+        }
+
         private Show fillShow() {
             return new Show(txtTitle.getText(), txtScreenwriter.getText(), Integer.parseInt(txtSeasons.getText()), txtGenre.getText(), Integer.parseInt(txtSeen.getText()), txtPlatform.getText());
         }
@@ -181,20 +189,14 @@ public class FrameShows extends JFrame {
         private Show insert() {
             Show s = new Show();
             if (btnInsert.getText().equals("+")) {
-                btnInsert.setText("+++");                
-                setButtons(false); 
+                btnInsert.setText("+++");
+                setButtons(false);
                 btnInsert.setEnabled(true);
-                setTextFields(true);
-                cmbPlatform.setVisible(true);
-                lblPlatform.setVisible(false);
-                txtPlatform.setVisible(false);
+                actualizaPlatforms(true);
             } else {
                 btnInsert.setText("+");
                 setButtons(true);
-                setTextFields(false);
-                cmbPlatform.setVisible(false);
-                lblPlatform.setVisible(true);
-                txtPlatform.setVisible(true);
+                actualizaPlatforms(false);
                 txtPlatform.setText(cmbPlatform.getSelectedItem() + "");
                 s = control.insert(fillShow());
             }
@@ -217,18 +219,12 @@ public class FrameShows extends JFrame {
                 btnUpdate.setText("***");
                 setButtons(false);
                 btnUpdate.setEnabled(true);
-                setTextFields(true);
-                cmbPlatform.setVisible(true);
-                lblPlatform.setVisible(false);
-                txtPlatform.setVisible(false);
+                actualizaPlatforms(true);
             } else {
                 btnUpdate.setText("*");
                 setButtons(true);
-                setTextFields(false);
+                actualizaPlatforms(false);
                 txtPlatform.setText(cmbPlatform.getSelectedItem() + "");
-                cmbPlatform.setVisible(false);
-                lblPlatform.setVisible(true);
-                txtPlatform.setVisible(true);
                 s = control.update(fillShow());
             }
 
