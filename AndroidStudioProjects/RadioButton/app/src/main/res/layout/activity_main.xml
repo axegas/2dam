@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/LblTitulo"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="CALCULADORA" />
+
+    <EditText
+        android:id="@+id/txtNum1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        />
+
+    <EditText
+        android:id="@+id/txtNum2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"/>
+
+    <RadioGroup
+        android:id="@+id/gruporb"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+        <RadioButton
+            android:id="@+id/rbSuma"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sumar" />
+        <RadioButton
+            android:id="@+id/rbResta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Restar" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/lblResultado"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="" />
+
+</LinearLayout>
