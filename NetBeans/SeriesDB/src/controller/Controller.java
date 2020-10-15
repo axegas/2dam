@@ -53,27 +53,25 @@ public class Controller {
         return getShow();
     }
 
-    public Show insert(Show s) throws SQLException {
-        listshow.add(s);
-        position = listshow.size() - 1;
+    public void insert(Show s) throws SQLException {
         conector.insertShow(s);
-        return getShow();
+        listshow.add(s);
+        position = listshow.size() - 1;        
     }
 
-    public Show delete() throws SQLException {
-        Show s = getShow();
-        conector.deleteShow(s);
+    public void delete() throws SQLException {
+        conector.deleteShow(getShow());
         listshow.remove(position);
-        position--;
-        if (position >= 0) {            
-            s = getShow();
-        } else {
-            s = new Show();
+        if(getSize()==0){
+            position = -1;
+        }else{
+            if(position!=0){
+                position--;
+            }
         }
-        return s;
     }
 
-    public Show update(Show s) throws SQLException {
+    public void update(Show s) throws SQLException {
         getShow().setGenre(s.getGenre());
         getShow().setName(s.getName());
         getShow().setSeasons(s.getSeasons());
@@ -82,11 +80,10 @@ public class Controller {
         getShow().setPlatform(s.getPlatform());
         getShow().setId(s.getId());
         conector.updateShow(s);
-        return getShow();
     }
 
-    public int getPos() {
-        return position;
+    public int getSize() {
+        return listshow.size();
     }
 
     public Show getShow() {

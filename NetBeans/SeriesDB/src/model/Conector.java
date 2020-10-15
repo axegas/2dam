@@ -29,20 +29,8 @@ public class Conector {
         }
     }
 
-    public void connect() {
-        try {
-            conexion = DriverManager.getConnection("jdbc:sqlite:" + url);
-        } catch (SQLException ex) {
-            System.err.println("No se ha podido conectar a la base de datos\n" + ex.getMessage());
-        }
-    }
-
-    public void close() {
-        try {
-            conexion.close();
-        } catch (SQLException ex) {
-            System.out.println("Error al cerrar.");
-        }
+    public void close() throws SQLException {
+        conexion.close();
     }
 
     public ResultSet consulta(String query) throws SQLException {
@@ -66,7 +54,7 @@ public class Conector {
     }
 
     public void updateShow(Show s) throws SQLException {
-        this.statement("UPDATE Show SET name='"+s.getName()+"', Screenwriter='"+s.getScreenwriter()+"', seasons="+s.getSeasons()+", genre='"+s.getGenre()+"', seen="+s.getSeasons_seen()+", platform='"+s.getPlatform()+"' WHERE id= " + s.getId() + "");
+        this.statement("UPDATE Show SET name='" + s.getName() + "', Screenwriter='" + s.getScreenwriter() + "', seasons=" + s.getSeasons() + ", genre='" + s.getGenre() + "', seen=" + s.getSeasons_seen() + ", platform='" + s.getPlatform() + "' WHERE id= " + s.getId() + "");
     }
 
     public ListShow loadShows() throws SQLException {
