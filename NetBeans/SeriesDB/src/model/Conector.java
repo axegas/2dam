@@ -68,5 +68,4 @@ public class Conector {
         }
         return ls;
     }
-
 }

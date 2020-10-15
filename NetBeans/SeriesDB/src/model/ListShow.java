@@ -5,14 +5,13 @@
  */
 package model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author axegas
  */
-public class ListShow implements Serializable {
+public class ListShow {
 
     private final ArrayList<Show> shows;
 

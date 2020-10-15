@@ -9,13 +9,12 @@ import controller.Controller;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import model.Show;
@@ -24,7 +23,7 @@ import model.Show;
  *
  * @author axegas
  */
-public class FrameShows extends JFrame {
+public class FrameShows extends JFrame{
 
     private JPanel pnlFrame;
     private JPanel pnlButtons;
@@ -64,14 +63,13 @@ public class FrameShows extends JFrame {
         btnDelete = new JButton("-");
         btnUpdate = new JButton("*");
 
-        ButtonsListener bl = new ButtonsListener();
-        btnFirst.addActionListener(bl);
-        btnPrevious.addActionListener(bl);
-        btnNext.addActionListener(bl);
-        btnLast.addActionListener(bl);
-        btnInsert.addActionListener(bl);
-        btnDelete.addActionListener(bl);
-        btnUpdate.addActionListener(bl);
+        btnFirst.addActionListener(e -> updating(control.first()));
+        btnPrevious.addActionListener(e -> updating(control.previous()));
+        btnNext.addActionListener(e -> updating(control.next()));
+        btnLast.addActionListener(e -> updating(control.last()));
+        btnInsert.addActionListener(e -> updating(insert()));
+        btnDelete.addActionListener(e -> updating(delete()));
+        btnUpdate.addActionListener(e -> updating(update()));
 
         pnlButtons.add(btnFirst);
         pnlButtons.add(btnPrevious);
@@ -161,88 +159,69 @@ public class FrameShows extends JFrame {
         return s;
     }
 
-    class ButtonsListener implements ActionListener {
+    private Show fillShow() {
+        return new Show(txtTitle.getText(), txtScreenwriter.getText(), Integer.parseInt(txtSeasons.getText()), txtGenre.getText(), Integer.parseInt(txtSeen.getText()), txtPlatform.getText());
+    }
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            Show s = new Show();
-            if (e.getSource() == btnFirst) {
-                s = control.first();
-            } else if (e.getSource() == btnPrevious) {
-                s = control.previous();
-            } else if (e.getSource() == btnNext) {
-                s = control.next();
-            } else if (e.getSource() == btnLast) {
-                s = control.last();
-            } else if (e.getSource() == btnInsert) {
-                s = insert();
-            } else if (e.getSource() == btnDelete) {
-                s = delete();
-            } else if (e.getSource() == btnUpdate) {
-                s = update();
+    private Show insert() {
+        Show s;
+        if (btnInsert.getText().equals("+")) {
+            btnInsert.setText("+++");
+            setButtons(false);
+            btnInsert.setEnabled(true);
+            setTextFields(true);
+            s = new Show();
+        } else {
+            btnInsert.setText("+");
+            setButtons(true);
+            setTextFields(false);
+            txtPlatform.setText(cmbPlatform.getSelectedItem().toString());
+            try {
+                s = fillShow();
+                control.insert(s);
+            } catch (SQLException | NumberFormatException ex) {
+                s = obtenShow();
+                System.out.println(ex.getMessage());
             }
-            updating(s);
         }
+        return s;
+    }
 
-        private Show fillShow() {
-            return new Show(txtTitle.getText(), txtScreenwriter.getText(), Integer.parseInt(txtSeasons.getText()), txtGenre.getText(), Integer.parseInt(txtSeen.getText()), txtPlatform.getText());
-        }
-
-        private Show insert() {  
-            Show s;
-            if (btnInsert.getText().equals("+")) {
-                btnInsert.setText("+++");
-                setButtons(false);
-                btnInsert.setEnabled(true);
-                setTextFields(true);
-                s = new Show();                
-            } else {
-                btnInsert.setText("+");
-                setButtons(true);
-                setTextFields(false);
-                txtPlatform.setText(cmbPlatform.getSelectedItem() + "");                   
-                try {
-                    s = fillShow();
-                    control.insert(s);
-                } catch (SQLException | NumberFormatException ex) {
-                    s = obtenShow();
-                    System.out.println(ex.getMessage());
-                }                
+    private Show update() {
+        Show s = control.getShow();
+        int id = s.getId();
+        if (btnUpdate.getText().equals("*")) {
+            btnUpdate.setText("***");
+            setButtons(false);
+            btnUpdate.setEnabled(true);
+            setTextFields(true);
+        } else {
+            btnUpdate.setText("*");
+            setButtons(true);
+            setTextFields(false);
+            txtPlatform.setText(cmbPlatform.getSelectedItem().toString());
+            try {
+                s = fillShow();
+                s.setId(id);
+                control.update(s);
+            } catch (SQLException | NumberFormatException ex) {
+                System.out.println(ex.getMessage());
             }
-            return s;
         }
+        return s;
+    }
 
-        private Show delete() {
+    private Show delete() {
+        int opc = JOptionPane.showConfirmDialog(this.getParent(), "¿Desea borrar la serie seleccionada?");
+        if (JOptionPane.OK_OPTION == opc) {
             try {
                 control.delete();
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
             }
             return obtenShow();
-        }
-
-        private Show update() {
-            Show s = control.getShow();
-            int id = s.getId();
-            if (btnUpdate.getText().equals("*")) {
-                btnUpdate.setText("***");
-                setButtons(false);
-                btnUpdate.setEnabled(true);
-                setTextFields(true);
-            } else {
-                btnUpdate.setText("*");
-                setButtons(true);
-                setTextFields(false);
-                txtPlatform.setText(cmbPlatform.getSelectedItem() + "");
-                try {
-                    s = fillShow();
-                    s.setId(id);
-                    control.update(s);
-                } catch (SQLException | NumberFormatException ex) {
-                    System.out.println(ex.getMessage());
-                }
-            }
-            return s;
+        } else {
+            return control.getShow();            
         }
     }
 }

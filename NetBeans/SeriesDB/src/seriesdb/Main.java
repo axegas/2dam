@@ -21,8 +21,6 @@ public class Main {
      */
     public static void main(String[] args) {
         try {
-
-            
             Conector con = new Conector();
             //con.statement("DROP TABLE Show");
             con.statement("CREATE TABLE IF NOT EXISTS Show (id integer primary key autoincrement, name VARCHAR(50), Screenwriter VARCHAR(50), seasons integer, genre VARCHAR(50), seen integer, platform VARCHAR(50))");

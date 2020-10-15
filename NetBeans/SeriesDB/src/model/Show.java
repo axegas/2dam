@@ -5,13 +5,11 @@
  */
 package model;
 
-import java.io.Serializable;
-
 /**
  *
  * @author axegas
  */
-public class Show implements Serializable {
+public class Show {
 
     private String name;
     private String Screenwriter;
