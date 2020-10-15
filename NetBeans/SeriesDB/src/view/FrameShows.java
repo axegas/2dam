@@ -39,9 +39,7 @@ public class FrameShows extends JFrame {
     public FrameShows(Controller control) {
         this.control = control;
         initComponents();
-
-        Show s = obtenShow();
-        updating(s);
+        updating(obtenShow());
         setTextFields(false);
     }
 

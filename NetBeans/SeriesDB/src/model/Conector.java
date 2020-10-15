@@ -50,26 +50,20 @@ public class Conector {
     }
 
     public void deleteShow(Show s) throws SQLException {
-        this.statement("DELETE FROM Show WHERE id= " + s.getId() + "");
+        this.statement("DELETE FROM Show WHERE id= " + s.getId());
     }
 
     public void updateShow(Show s) throws SQLException {
-        this.statement("UPDATE Show SET name='" + s.getName() + "', Screenwriter='" + s.getScreenwriter() + "', seasons=" + s.getSeasons() + ", genre='" + s.getGenre() + "', seen=" + s.getSeasons_seen() + ", platform='" + s.getPlatform() + "' WHERE id= " + s.getId() + "");
+        this.statement("UPDATE Show SET name='" + s.getName() + "', Screenwriter='" + s.getScreenwriter() + "', seasons=" + s.getSeasons() + ", genre='" + s.getGenre() + "', seen=" + s.getSeasons_seen() + ", platform='" + s.getPlatform() + "' WHERE id= " + s.getId());
     }
 
     public ListShow loadShows() throws SQLException {
         ResultSet rs = this.consulta("select * from Show");
         ListShow ls = new ListShow();
+        Show s;
         while (rs.next()) {
-            int i = rs.getInt(1);
-            String name = rs.getString(2);
-            String Screenwriter = rs.getString(3);
-            int seasons = rs.getInt(4);
-            String genre = rs.getString(5);
-            int seen = rs.getInt(6);
-            String platform = rs.getString(7);
-            Show s = new Show(name, Screenwriter, seasons, genre, seen, platform);
-            s.setId(i);
+            s = new Show(rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getInt(6), rs.getString(7));
+            s.setId(rs.getInt(1));
             ls.add(s);
         }
         return ls;
