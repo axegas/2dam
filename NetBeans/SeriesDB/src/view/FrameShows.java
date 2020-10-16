@@ -38,8 +38,8 @@ public class FrameShows extends JFrame{
     public FrameShows(Controller control) {
         this.control = control;
         initComponents();
-        updating(obtenShow());
-        setTextFields(false);
+        ponValoresEnTextFields(obtenShow());
+        textFieldsHabilitados(false);
     }
 
     private void initComponents() {
@@ -63,13 +63,13 @@ public class FrameShows extends JFrame{
         btnDelete = new JButton("-");
         btnUpdate = new JButton("*");
 
-        btnFirst.addActionListener(e -> updating(control.first()));
-        btnPrevious.addActionListener(e -> updating(control.previous()));
-        btnNext.addActionListener(e -> updating(control.next()));
-        btnLast.addActionListener(e -> updating(control.last()));
-        btnInsert.addActionListener(e -> updating(insert()));
-        btnDelete.addActionListener(e -> updating(delete()));
-        btnUpdate.addActionListener(e -> updating(update()));
+        btnFirst.addActionListener(e -> ponValoresEnTextFields(control.first()));
+        btnPrevious.addActionListener(e -> ponValoresEnTextFields(control.previous()));
+        btnNext.addActionListener(e -> ponValoresEnTextFields(control.next()));
+        btnLast.addActionListener(e -> ponValoresEnTextFields(control.last()));
+        btnInsert.addActionListener(e -> ponValoresEnTextFields(insert()));
+        btnDelete.addActionListener(e -> ponValoresEnTextFields(delete()));
+        btnUpdate.addActionListener(e -> ponValoresEnTextFields(update()));
 
         pnlButtons.add(btnFirst);
         pnlButtons.add(btnPrevious);
@@ -93,10 +93,7 @@ public class FrameShows extends JFrame{
         txtSeen = new JTextField(50);
         txtPlatform = new JTextField(50);
 
-        platforms = new String[3];
-        platforms[0] = "NETFLIX";
-        platforms[1] = "HBO";
-        platforms[2] = "DISNEY";
+        platforms = new String[]{"NETFLIX","HBO","DISNEY"};
 
         cmbPlatform = new JComboBox(platforms);
         cmbPlatform.setVisible(false);
@@ -116,7 +113,7 @@ public class FrameShows extends JFrame{
         pnlMain.add(cmbPlatform);
     }
 
-    private void setButtons(boolean state) {
+    private void botonesHabilitados(boolean state) {
         btnFirst.setEnabled(state);
         btnPrevious.setEnabled(state);
         btnNext.setEnabled(state);
@@ -126,7 +123,7 @@ public class FrameShows extends JFrame{
         btnInsert.setEnabled(state);
     }
 
-    private void setTextFields(boolean state) {
+    private void textFieldsHabilitados(boolean state) {
         txtTitle.setEditable(state);
         txtScreenwriter.setEditable(state);
         txtSeasons.setEditable(state);
@@ -139,7 +136,7 @@ public class FrameShows extends JFrame{
         txtPlatform.setVisible(!state);
     }
 
-    private void updating(Show s) {
+    private void ponValoresEnTextFields(Show s) {
         txtTitle.setText(s.getName());
         txtScreenwriter.setText(s.getScreenwriter());
         txtSeasons.setText(String.valueOf(s.getSeasons()));
@@ -151,7 +148,7 @@ public class FrameShows extends JFrame{
     private Show obtenShow() {
         Show s = new Show();
         if (control.getSize() == 0) {
-            setButtons(false);
+            botonesHabilitados(false);
             btnInsert.setEnabled(true);
         } else {
             s = control.getShow();
@@ -159,7 +156,7 @@ public class FrameShows extends JFrame{
         return s;
     }
 
-    private Show fillShow() {
+    private Show creaSerie() {
         return new Show(txtTitle.getText(), txtScreenwriter.getText(), Integer.parseInt(txtSeasons.getText()), txtGenre.getText(), Integer.parseInt(txtSeen.getText()), txtPlatform.getText());
     }
 
@@ -167,17 +164,17 @@ public class FrameShows extends JFrame{
         Show s;
         if (btnInsert.getText().equals("+")) {
             btnInsert.setText("+++");
-            setButtons(false);
+            botonesHabilitados(false);
             btnInsert.setEnabled(true);
-            setTextFields(true);
+            textFieldsHabilitados(true);
             s = new Show();
         } else {
             btnInsert.setText("+");
-            setButtons(true);
-            setTextFields(false);
+            botonesHabilitados(true);
+            textFieldsHabilitados(false);
             txtPlatform.setText(cmbPlatform.getSelectedItem().toString());
             try {
-                s = fillShow();
+                s = creaSerie();
                 control.insert(s);
             } catch (SQLException | NumberFormatException ex) {
                 s = obtenShow();
@@ -192,16 +189,16 @@ public class FrameShows extends JFrame{
         int id = s.getId();
         if (btnUpdate.getText().equals("*")) {
             btnUpdate.setText("***");
-            setButtons(false);
+            botonesHabilitados(false);
             btnUpdate.setEnabled(true);
-            setTextFields(true);
+            textFieldsHabilitados(true);
         } else {
             btnUpdate.setText("*");
-            setButtons(true);
-            setTextFields(false);
+            botonesHabilitados(true);
+            textFieldsHabilitados(false);
             txtPlatform.setText(cmbPlatform.getSelectedItem().toString());
             try {
-                s = fillShow();
+                s = creaSerie();
                 s.setId(id);
                 control.update(s);
             } catch (SQLException | NumberFormatException ex) {

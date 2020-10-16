@@ -25,7 +25,7 @@ public class Main {
             //con.statement("DROP TABLE Show");
             con.statement("CREATE TABLE IF NOT EXISTS Show (id integer primary key autoincrement, name VARCHAR(50), Screenwriter VARCHAR(50), seasons integer, genre VARCHAR(50), seen integer, platform VARCHAR(50))");
             con.close();
-             
+            
             FrameShows fs = new FrameShows(new Controller());
             fs.setVisible(true);
         } catch (SQLException ex) {
