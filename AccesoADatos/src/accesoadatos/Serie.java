@@ -75,7 +75,8 @@ public class Serie implements Entregable{
 
     @Override
     public String toString() {
-        return "Serie{" + "titulo=" + titulo + ", temporadas=" + temporadas + ", entregado=" + entregado + ", genero=" + genero + ", creador=" + creador + '}';
+        String str = entregado ? "si" : "no";    
+        return "Titulo: " + titulo + ", Temporadas: " + temporadas + ", Entregado: " + str + ", Genero: " + genero + ", Creador: " + creador;
     }
 
     @Override

@@ -74,7 +74,8 @@ public class Videojuego implements Entregable {
 
     @Override
     public String toString() {
-        return "Videojuego{" + "titulo=" + titulo + ", horasEstimadas=" + horasEstimadas + ", entregado=" + entregado + ", genero=" + genero + ", companyia=" + companyia + '}';
+        String str = entregado ? "si" : "no";        
+        return "Titulo: " + titulo + ", Horas Estimadas: " + horasEstimadas + ", Entregado: " + str + ", Genero: " + genero + ", Compañia: " + companyia;
     }
 
     @Override
