@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">EjerTodosLayouts</string>
+    <string name="linear_layout">LinearLayout</string>
+    <string name="grid_layout">GridLayout</string>
+    <string name="constraint_layout">ConstraintLayout</string>
+    <string name="table_layout">TableLayout</string>
+    <string name="test_checkbox">Check</string>
+    <string name="back_to_main">Back To Main</string>
+    <string name="test_label">TextView</string>
+</resources>

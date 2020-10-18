@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">EjerRadioColores</string>
+    <string name="radio_verde">Verde</string>
+    <string name="radio_rojo">Rojo</string>
+    <string name="radio_azul">Azul</string>
+    <string name="btn_color">COLOR</string>
+    <string name="btn_ver_2">VERSION 2</string>
+</resources>

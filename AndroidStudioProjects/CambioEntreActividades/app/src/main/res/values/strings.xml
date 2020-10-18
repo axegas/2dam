@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">CambioEntreActividades</string>
+    <string name="tvPantalla1">Pantalla 1</string>
+    <string name="tvPantalla2">Pantalla 2</string>
+    <string name="tvPantalla3">Pantalla 3</string>
+    <string name="btnPantalla2">Pantalla 2</string>
+    <string name="btnPantalla3">Pantalla 3</string>
+    <string name="btnVolver">Volver</string>
+</resources>
