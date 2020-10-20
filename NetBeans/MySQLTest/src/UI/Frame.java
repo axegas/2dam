@@ -99,7 +99,7 @@ public class Frame extends JFrame {
         });
     }
     
-    public void actualiza(Client c){
+    private void actualiza(Client c){
         txtID.setText(c.getId());
         taNotes.setText(c.getNotes());
     }
