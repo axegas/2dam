@@ -95,7 +95,6 @@ public class Frame extends JFrame {
         btnAll.addActionListener(e -> {
             updateEnabled(true);
             txtSearch.setText("");
-            control.searchAll();
             actualiza(control.getClienteActual());
         });
 

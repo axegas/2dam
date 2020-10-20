@@ -22,17 +22,12 @@ public class Controller {
     private Client clienteActual;
 
     public Controller() {
-        
         this.conn = new ClientDAO();
-        /*
-        this.clients = conn.loadClients();
-        if (clients.isEmpty()) {
-            this.position = -1;
-            clienteActual = new Client();
-        } else {
-            this.position = 0;
-            clienteActual = clients.get(position);
-        }*/
+        try {
+            searchAll();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     public Client getClienteActual() {
@@ -55,40 +50,39 @@ public class Controller {
         return clienteActual;
     }
 
-    /*
     public Client search(String ID) {
         Client c = null;
-        for (int i = 0; i < clients.size(); i++) {            
+        for (int i = 0; i < clients.size(); i++) {
             if (clients.get(i).getId().equals(ID)) {
                 position = i;
                 c = clients.get(i);
                 break;
             }
         }
+        if(c!=null){
+            clienteActual = c;
+        }
         return c;
-    }*/
+    }
+
+    /*
     public Client search(String ID) {
-        Client c = null;       
+        Client c = null;
         try {
             c = conn.loadClient(ID);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
         return c;
-    }
-    
-    public void searchAll(){        
-        try {
-            this.clients = conn.loadClients();
-            if (clients.isEmpty()) {
-                this.position = -1;
-                clienteActual = new Client();
-            } else {
-                this.position = 0;
-                clienteActual = clients.get(position);
-            }
-        } catch (SQLException ex) {
-            
+    }*/
+    private void searchAll() throws SQLException {
+        this.clients = conn.loadClients();
+        if (clients.isEmpty()) {
+            this.position = -1;
+            clienteActual = new Client();
+        } else {
+            this.position = 0;
+            clienteActual = clients.get(position);
         }
     }
 

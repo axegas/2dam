@@ -40,10 +40,10 @@ public class Connect {
         conexion = DriverManager.getConnection(URL + ATRIBUTES, USUARIO, CLAVE);
     }
 
-    public void close(Connection con) throws SQLException {
+    public void close() throws SQLException {
         try {
-            if (con != null) {
-                con.close();
+            if (conexion != null) {
+                conexion.close();
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -58,7 +58,8 @@ public class Connect {
     }
 
     public void statement(String query) throws SQLException {
-        PreparedStatement preparedStatement = conexion.prepareStatement(query);
-        preparedStatement.executeUpdate();
+        try (PreparedStatement preparedStatement = conexion.prepareStatement(query)) {
+            preparedStatement.executeUpdate();
+        }
     }
 }
