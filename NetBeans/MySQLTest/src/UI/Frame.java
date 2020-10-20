@@ -33,13 +33,12 @@ public class Frame extends JFrame {
     public Frame(Controller control) {
         this.control = control;
         initComponents();
-        updateEnabled(true);
-        actualiza(control.getClienteActual());
+        updateEnabled(false);
     }
 
     private void initComponents() {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setBounds(200, 200, 700, 250);
+        setBounds(300, 300, 700, 250);
         setTitle("MySQL Test");
 
         //Labels
@@ -86,28 +85,38 @@ public class Frame extends JFrame {
         pnlBottom.add(btnRight);
 
         //Listeners
-        btnSearch.addActionListener(e -> updateEnabled(true));
-        btnAll.addActionListener(e -> updateEnabled(false));
         btnLeft.addActionListener(e -> actualiza(control.left()));
         btnRight.addActionListener(e -> actualiza(control.right()));
-                
+        btnSearch.addActionListener(e -> {
+            updateEnabled(false);
+            actualiza(new Client());
+        });
+
+        btnAll.addActionListener(e -> {
+            updateEnabled(true);
+            txtSearch.setText("");
+            control.searchAll();
+            actualiza(control.getClienteActual());
+        });
+
         txtSearch.addActionListener(e -> {
             String id = txtSearch.getText();
             Client c = control.search(id);
-            if(c!=null)
-                actualiza(c);                  
+            if (c != null) {
+                actualiza(c);
+            }
         });
     }
-    
-    private void actualiza(Client c){
+
+    private void actualiza(Client c) {
         txtID.setText(c.getId());
         taNotes.setText(c.getNotes());
     }
 
     private void updateEnabled(boolean state) {
-        txtSearch.setEditable(state);
-        btnLeft.setEnabled(!state);
-        btnRight.setEnabled(!state);
+        txtSearch.setEditable(!state);
+        btnLeft.setEnabled(state);
+        btnRight.setEnabled(state);
 
         txtSearch.setBackground(Color.white);
     }

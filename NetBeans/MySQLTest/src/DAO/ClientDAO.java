@@ -27,7 +27,7 @@ public class ClientDAO {
 
     public ArrayList<Client> loadClients() throws SQLException {
         ArrayList<Client> clients = new ArrayList<>();
-        ResultSet rs = con.consulta("select * from client");
+        ResultSet rs = con.consulta("select * from clients");
         String id;
         String notes;
         Client c;
@@ -38,6 +38,18 @@ public class ClientDAO {
             clients.add(c);
         }
         return clients;
+    }
+
+    public Client loadClient(String id) throws SQLException{
+        ResultSet rs = con.consulta("select * from clients where id = '"+id+"'");
+        String notes;
+        Client c = null;
+        while (rs.next()) {
+            id = rs.getString(1);
+            notes = rs.getString(2);
+            c = new Client(id, notes);
+        }
+        return c;
     }
 
 }

@@ -17,12 +17,14 @@ import java.util.ArrayList;
 public class Controller {
 
     private final ClientDAO conn;
-    private final ArrayList<Client> clients;
+    private ArrayList<Client> clients;
     private int position;
     private Client clienteActual;
 
-    public Controller() throws SQLException {
+    public Controller() {
+        
         this.conn = new ClientDAO();
+        /*
         this.clients = conn.loadClients();
         if (clients.isEmpty()) {
             this.position = -1;
@@ -30,17 +32,17 @@ public class Controller {
         } else {
             this.position = 0;
             clienteActual = clients.get(position);
-        }
+        }*/
     }
-    
-    public Client getClienteActual(){
+
+    public Client getClienteActual() {
         return clienteActual;
     }
 
     public Client left() {
         if (position > 0) {
             position--;
-            clienteActual = clients.get(position);            
+            clienteActual = clients.get(position);
         }
         return clienteActual;
     }
@@ -48,11 +50,12 @@ public class Controller {
     public Client right() {
         if (position < clients.size() - 1) {
             position++;
-            clienteActual = clients.get(position); 
+            clienteActual = clients.get(position);
         }
         return clienteActual;
     }
 
+    /*
     public Client search(String ID) {
         Client c = null;
         for (int i = 0; i < clients.size(); i++) {            
@@ -63,6 +66,30 @@ public class Controller {
             }
         }
         return c;
+    }*/
+    public Client search(String ID) {
+        Client c = null;       
+        try {
+            c = conn.loadClient(ID);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return c;
+    }
+    
+    public void searchAll(){        
+        try {
+            this.clients = conn.loadClients();
+            if (clients.isEmpty()) {
+                this.position = -1;
+                clienteActual = new Client();
+            } else {
+                this.position = 0;
+                clienteActual = clients.get(position);
+            }
+        } catch (SQLException ex) {
+            
+        }
     }
 
 }
