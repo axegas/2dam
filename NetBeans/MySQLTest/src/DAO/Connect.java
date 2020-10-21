@@ -41,19 +41,14 @@ public class Connect {
     }
 
     public void close() throws SQLException {
-        try {
-            if (conexion != null) {
-                conexion.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (conexion != null) {
+            conexion.close();
         }
     }
 
-    public ResultSet consulta(String query) throws SQLException {
-        ResultSet rs;
-        Statement stm = conexion.createStatement();
-        rs = stm.executeQuery(query);
+    public ResultSet getResultSet(String sql) throws SQLException {
+        PreparedStatement stmt = conexion.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
         return rs;
     }
 

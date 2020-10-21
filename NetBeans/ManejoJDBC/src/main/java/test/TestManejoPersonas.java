@@ -16,29 +16,30 @@ import java.util.ArrayList;
 public class TestManejoPersonas {
     /*
     CREATE SCHEMA `test` ;
-CREATE TABLE `test`.`persona` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `nombre` VARCHAR(45) NOT NULL,
-  `apellidos` VARCHAR(45) NOT NULL,
-  `edad` INT NULL,
-  PRIMARY KEY (`id`));
-    
-    
-    
-    
+    CREATE TABLE `test`.`persona` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `nombre` VARCHAR(45) NOT NULL,
+    `apellidos` VARCHAR(45) NOT NULL,
+    `edad` INT NULL,
+    PRIMARY KEY (`id`));
     */
       public static void main(String[] args) {
           personaDAO dao = new personaDAO();          
           
-          //dao.insert(new Persona("Axel","Perez",32));
-          ArrayList<Persona> personas = dao.selectAll();
+          //dao.insert(new Persona("Paco","Perez",32));
+          
           //dao.insert(new Persona("Carlos","Perez",54));
+          ArrayList<Persona> personas = dao.selectAll();
+          //personas.get(0).setNombre("Feder");
           
-          //personas.get(3).setNombre("Feder");
-          //System.out.println(dao.update(personas.get(3)));
-          
+          //System.out.println(dao.update(personas.get(0)));
+          //dao.delete(personas.get(0));
           //dao.delete(personas.get(3));
           //personas = dao.selectAll();
+          
+          
+          
+          
           personas.forEach(p -> System.out.println(p));
           
       }

@@ -10,6 +10,7 @@ package DAO;
  * @author peixe
  */
 public class Client {
+
     private String id;
     private String notes;
 
@@ -41,8 +42,14 @@ public class Client {
 
     @Override
     public String toString() {
-        return "Client{" + "id=" + id + ", notes=" + notes + '}';
+        return id;
     }
-    
-    
+
+    public String muestraCliente() {
+        String text = "";
+        text += "Cliente ID: " + id + "\n";
+        text += "Notas: " + notes + "\n";
+        return text;
+    }
+
 }

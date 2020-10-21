@@ -5,7 +5,7 @@
  */
 package mysqltest;
 
-import UI.Frame;
+import UI.FrameJList;
 
 /**
  *
@@ -30,10 +30,19 @@ public class MySQLTest {
         insert into clients values ('3','123zdgfjzdj4');
         insert into clients values ('4','12xfgkjzdj34');
         insert into clients values ('5','1fdsgjfd234');
-        insert into clients values ('6','12<sdgs<dg34');        
+        insert into clients values ('6','12<sdgs<dg34');   
+        insert into clients values ('7','12zdgfjzdjf34');
+        insert into clients values ('8','123gzjz4');
+        insert into clients values ('9','123zdgfjzdj4');
+        insert into clients values ('10','12xfgkjzdj34');
+        insert into clients values ('11','1fdsgjfd234');
+        insert into clients values ('12','12<sdgs<dg34'); 
         
          */
-        Frame f = new Frame(new Controller());
+        //Frame f = new Frame(new Controller());
+        FrameJList f = new FrameJList(new ControllerJList());
         f.setVisible(true);
+       
+     
     }
 }

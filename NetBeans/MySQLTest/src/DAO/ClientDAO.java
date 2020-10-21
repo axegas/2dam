@@ -8,6 +8,7 @@ package DAO;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -25,34 +26,51 @@ public class ClientDAO {
         }
     }
 
-    public ArrayList<Client> loadClients() throws SQLException {
+    public ArrayList<Client> loadClients() {
         ArrayList<Client> clients = new ArrayList<>();
-        try (ResultSet rs = con.consulta("select * from clients")) {
-            String id;
-            String notes;
+        try (ResultSet rs = con.getResultSet("select * from clients")) {
             Client c;
             while (rs.next()) {
-                id = rs.getString(1);
-                notes = rs.getString(2);
-                c = new Client(id, notes);
+                c = createClient(rs);
                 clients.add(c);
             }
+            con.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
-        con.close();
         return clients;
     }
 
-    public Client loadClient(String id) throws SQLException{
-        Client c;
-        try (ResultSet rs = con.consulta("select * from clients where id = '"+id+"'")) {
-            String notes;
-            c = null;
-            while (rs.next()) {
-                id = rs.getString(1);
-                notes = rs.getString(2);
-                c = new Client(id, notes);
-            }
+    public Client loadClient(String id) {
+        Client c = null;
+        try (ResultSet rs = con.getResultSet("select * from clients where id = '" + id + "'")) {
+            c = createClient(rs);
+            con.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
+        return c;
+    }
+
+    public DefaultListModel loadClientsModel() {
+        DefaultListModel clients = new DefaultListModel();
+        try (ResultSet rs = con.getResultSet("select * from clients")) {
+            Client c;
+            while (rs.next()) {
+                c = createClient(rs);
+                clients.addElement(c);
+            }
+            con.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return clients;
+    }
+
+    private Client createClient(ResultSet rs) throws SQLException {
+        String id = rs.getString(1);
+        String notes = rs.getString(2);
+        Client c = new Client(id, notes);
         return c;
     }
 

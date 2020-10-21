@@ -7,8 +7,8 @@ package mysqltest;
 
 import DAO.Client;
 import DAO.ClientDAO;
-import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -23,11 +23,7 @@ public class Controller {
 
     public Controller() {
         this.conn = new ClientDAO();
-        try {
-            searchAll();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+        searchAll();
     }
 
     public Client getClienteActual() {
@@ -52,6 +48,8 @@ public class Controller {
 
     public Client search(String ID) {
         Client c = null;
+        
+        //esto la forma tradicional
         for (int i = 0; i < clients.size(); i++) {
             if (clients.get(i).getId().equals(ID)) {
                 position = i;
@@ -59,7 +57,7 @@ public class Controller {
                 break;
             }
         }
-        if(c!=null){
+        if (c != null) {
             clienteActual = c;
         }
         return c;
@@ -68,14 +66,10 @@ public class Controller {
     /*
     public Client search(String ID) {
         Client c = null;
-        try {
-            c = conn.loadClient(ID);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+        c = conn.loadClient(ID);
         return c;
     }*/
-    private void searchAll() throws SQLException {
+    private void searchAll() {
         this.clients = conn.loadClients();
         if (clients.isEmpty()) {
             this.position = -1;

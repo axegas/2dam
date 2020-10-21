@@ -25,33 +25,14 @@ public class personaDAO {
 
     public ArrayList<Persona> selectAll() {
         ArrayList<Persona> personas = new ArrayList<>();
-        Connection conn;
-        PreparedStatement stmt;
-        ResultSet rs;
-
-        try {
-            conn = Conexion.getConnection();
-            stmt = conn.prepareStatement(SQL_SELECT);
-            rs = stmt.executeQuery();
-
+        try (Connection conn = Conexion.getConnection(); PreparedStatement stmt = conn.prepareStatement(SQL_SELECT)) {
             Persona p;
-            int id;
-            String nombre;
-            String apellidos;
-            int edad;
-
-            while (rs.next()) {
-                id = rs.getInt("id");
-                nombre = rs.getString("nombre");
-                apellidos = rs.getString("apellidos");
-                edad = rs.getInt("edad");
-                p = new Persona(id, nombre, apellidos, edad);
-                personas.add(p);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    p = crearPersona(rs);
+                    personas.add(p);
+                }
             }
-
-            Conexion.close(rs);
-            Conexion.close(stmt);
-            Conexion.close(conn);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -59,67 +40,50 @@ public class personaDAO {
     }
 
     public int insert(Persona p) {
-
-        Connection conn = null;
-        PreparedStatement stmt = null;
         int registros = 0;
-
-        try {
-            conn = Conexion.getConnection();
-            stmt = conn.prepareStatement(SQL_INSERT);
+        try (Connection conn = Conexion.getConnection(); PreparedStatement stmt = conn.prepareStatement(SQL_INSERT)) {
             stmt.setString(1, p.getNombre());
             stmt.setString(2, p.getApellidos());
             stmt.setInt(3, p.getEdad());
             registros = stmt.executeUpdate();
-
-            Conexion.close(stmt);
-            Conexion.close(conn);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return registros;
     }
 
     public int update(Persona p) {
-
-        Connection conn;
-        PreparedStatement stmt;
         int registros = 0;
-
-        try {
-            conn = Conexion.getConnection();
-            stmt = conn.prepareStatement(SQL_UPDATE);
+        try (Connection conn = Conexion.getConnection(); PreparedStatement stmt = conn.prepareStatement(SQL_UPDATE)) {
             stmt.setString(1, p.getNombre());
             stmt.setString(2, p.getApellidos());
             stmt.setInt(3, p.getEdad());
             stmt.setInt(4, p.getId());
             registros = stmt.executeUpdate();
-
-            Conexion.close(stmt);
-            Conexion.close(conn);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return registros;
     }
 
-    public void delete(Persona p) {
-        Connection conn;
-        PreparedStatement stmt;
-
-        try {
-            conn = Conexion.getConnection();
-            stmt = conn.prepareStatement(SQL_DELETE);
+    public int delete(Persona p) {
+        int registros = 0;
+        try (Connection conn = Conexion.getConnection(); PreparedStatement stmt = conn.prepareStatement(SQL_DELETE)) {
             stmt.setInt(1, p.getId());
-            stmt.executeUpdate();
-
-            Conexion.close(stmt);
-            Conexion.close(conn);
+            registros = stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return registros;
+    }
+
+    private Persona crearPersona(ResultSet rs) throws SQLException {
+        int id = rs.getInt("id");
+        String nombre = rs.getString("nombre");
+        String apellidos = rs.getString("apellidos");
+        int edad = rs.getInt("edad");
+        Persona p = new Persona(id, nombre, apellidos, edad);
+        return p;
     }
 
 }
