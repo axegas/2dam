@@ -5,7 +5,7 @@
  */
 package UI;
 
-import DAO.Client;
+import model.Client;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -15,22 +15,22 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import mysqltest.Controller;
+import controller.MainController;
 
 /**
  *
  * @author peixe
  */
-public class Frame extends JFrame {
+public class MainFrame extends JFrame {
 
     private JLabel lblNotes, lblID, lblSearch;
     private JButton btnSearch, btnAll, btnLeft, btnRight;
     private JTextArea taNotes;
     private JPanel pnlMain, pnlTop, pnlMiddle, pnlBottom;
     private JTextField txtSearch, txtID;
-    private final Controller control;
+    private final MainController control;
 
-    public Frame(Controller control) {
+    public MainFrame(MainController control) {
         this.control = control;
         initComponents();
         updateEnabled(false);

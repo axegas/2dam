@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mysqltest;
+package controller;
 
-import DAO.Client;
+import model.Client;
 import DAO.ClientDAO;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -14,14 +14,14 @@ import java.util.stream.Collectors;
  *
  * @author peixe
  */
-public class Controller {
+public class MainController {
 
     private final ClientDAO conn;
     private ArrayList<Client> clients;
     private int position;
     private Client clienteActual;
 
-    public Controller() {
+    public MainController() {
         this.conn = new ClientDAO();
         searchAll();
     }

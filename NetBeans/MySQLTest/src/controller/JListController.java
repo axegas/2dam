@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mysqltest;
+package controller;
 
-import DAO.Client;
+import model.Client;
 import DAO.ClientDAO;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -21,14 +21,14 @@ import javax.swing.DefaultListModel;
  *
  * @author peixe
  */
-public class ControllerJList {
+public class JListController {
 
     private final ClientDAO conn;
     private final DefaultListModel<Client> clients;
 
     private Client clienteActual;
 
-    public ControllerJList() {
+    public JListController() {
         this.conn = new ClientDAO();
         this.clients = conn.loadClientsModel();
     }

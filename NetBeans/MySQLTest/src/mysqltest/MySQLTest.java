@@ -5,7 +5,8 @@
  */
 package mysqltest;
 
-import UI.FrameJList;
+import controller.JListController;
+import UI.JListFrame;
 
 /**
  *
@@ -40,7 +41,7 @@ public class MySQLTest {
         
          */
         //Frame f = new Frame(new Controller());
-        FrameJList f = new FrameJList(new ControllerJList());
+        JListFrame f = new JListFrame(new JListController());
         f.setVisible(true);
        
      

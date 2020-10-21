@@ -14,21 +14,21 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
-import mysqltest.ControllerJList;
+import controller.JListController;
 
 /**
  *
  * @author peixe
  */
-public class FrameJList extends JFrame {
+public class JListFrame extends JFrame {
 
-    private final ControllerJList control;
+    private final JListController control;
     private JPanel pnlMain, pnlLeft, pnlButtons, pnlRight;
     private JButton btnRight, btnLeft, btnPrint;
     private JList lstLeft, lstRight;
     private DefaultListModel dlmLeft, dlmRight;
 
-    public FrameJList(ControllerJList control) {
+    public JListFrame(JListController control) {
         this.control = control;
         initComponents();
     }
