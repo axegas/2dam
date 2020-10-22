@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class personaDAO {
 
     private final static String SQL_SELECT = "select * from persona";
-    private final static String SQL_INSERT = "insert into persona(nombre,apellidos,edad)values(?,?,?)";
+    private final static String SQL_INSERT = "insert into persona(nombre,apellidos,email,edad)values(?,?,?,?)";
     private final static String SQL_UPDATE = "update persona set nombre='?',apellidos='?',edad='?' where id=?";
     private final static String SQL_DELETE = "delete from persona where id=?";
 
@@ -44,7 +44,8 @@ public class personaDAO {
         try (Connection conn = Conexion.getConnection(); PreparedStatement stmt = conn.prepareStatement(SQL_INSERT)) {
             stmt.setString(1, p.getNombre());
             stmt.setString(2, p.getApellidos());
-            stmt.setInt(3, p.getEdad());
+            stmt.setString(3, p.getEmail());
+            stmt.setInt(4, p.getEdad());
             registros = stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -78,11 +79,12 @@ public class personaDAO {
     }
 
     private Persona crearPersona(ResultSet rs) throws SQLException {
-        int id = rs.getInt("id");
+        int id = rs.getInt("id_persona");
         String nombre = rs.getString("nombre");
         String apellidos = rs.getString("apellidos");
+        String email = rs.getString("email");
         int edad = rs.getInt("edad");
-        Persona p = new Persona(id, nombre, apellidos, edad);
+        Persona p = new Persona(id, nombre, apellidos, email, edad);
         return p;
     }
 

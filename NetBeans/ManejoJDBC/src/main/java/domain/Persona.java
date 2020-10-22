@@ -15,11 +15,34 @@ public class Persona {
     private String nombre;
     private String apellidos;
     private int edad;
+    private String email;
 
     public Persona(String nombre, String apellidos, int edad) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.edad = edad;
+    }
+
+    public Persona(String nombre, String apellidos, String email, int edad) {
+        this.email = email;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.edad = edad;
+    }
+
+    public Persona(int id, String nombre, String apellidos, String email, int edad) {
+        this.email = email;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.edad = edad;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Persona() {
@@ -72,7 +95,5 @@ public class Persona {
     public String toString() {
         return "Persona{" + "id=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", edad=" + edad + '}';
     }
-    
-    
 
 }

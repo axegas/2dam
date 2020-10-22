@@ -28,7 +28,7 @@ public class TestManejoPersonas {
           
           //dao.insert(new Persona("Paco","Perez",32));
           
-          //dao.insert(new Persona("Carlos","Perez",54));
+          dao.insert(new Persona("pablo","suarez","hola@",54));
           ArrayList<Persona> personas = dao.selectAll();
           //personas.get(0).setNombre("Feder");
           
