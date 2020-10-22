@@ -18,6 +18,7 @@ import javax.swing.DefaultListModel;
 public class ClientDAO {
 
     private Connect con;
+    private final static String SQL_SELECT = "select * from clients";
 
     public ClientDAO() {
         try {
@@ -29,7 +30,7 @@ public class ClientDAO {
 
     public ArrayList<Client> loadClients() {
         ArrayList<Client> clients = new ArrayList<>();
-        try (ResultSet rs = con.getResultSet("select * from clients")) {
+        try (ResultSet rs = con.getResultSet(SQL_SELECT)) {
             Client c;
             while (rs.next()) {
                 c = createClient(rs);
@@ -44,18 +45,18 @@ public class ClientDAO {
 
     public Client loadClient(String id) {
         Client c = null;
-        try (ResultSet rs = con.getResultSet("select * from clients where id = '" + id + "'")) {
+        try (ResultSet rs = con.getResultSet(SQL_SELECT + " where id = '" + id + "'")) {
             c = createClient(rs);
             con.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
         return c;
-    }
+    }   
 
     public DefaultListModel loadClientsModel() {
         DefaultListModel clients = new DefaultListModel();
-        try (ResultSet rs = con.getResultSet("select * from clients")) {
+        try (ResultSet rs = con.getResultSet(SQL_SELECT)) {
             Client c;
             while (rs.next()) {
                 c = createClient(rs);

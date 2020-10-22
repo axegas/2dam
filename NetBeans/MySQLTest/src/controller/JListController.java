@@ -15,6 +15,7 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 
 /**
@@ -25,16 +26,20 @@ public class JListController {
 
     private final ClientDAO conn;
     private final DefaultListModel<Client> clients;
-
-    private Client clienteActual;
+    private final ArrayList<Client> clientsArray;
 
     public JListController() {
         this.conn = new ClientDAO();
         this.clients = conn.loadClientsModel();
+        this.clientsArray = conn.loadClients();
     }
 
     public DefaultListModel getListModel() {
         return clients;
+    }
+    
+    public ArrayList<Client> getListArray(){
+        return clientsArray;
     }
 
     public void createPDF(DefaultListModel dlmRight) {
@@ -44,7 +49,7 @@ public class JListController {
             doc.open();
 
             Client c;
-            String text = "Lista de clientes:\n";
+            String text = "Lista de clientes:\n\n";
             for (int k = 0; k < dlmRight.size(); k++) {
                 c = (Client) dlmRight.get(k);
                 text += c.muestraCliente();

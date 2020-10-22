@@ -6,6 +6,8 @@
 package test;
 
 import UI.MainFrame;
+import datos.UserDAO;
+import domain.User;
 import java.util.ArrayList;
 
 /**
@@ -15,7 +17,7 @@ import java.util.ArrayList;
 public class Main {
 
     public static void main(String[] args) {
-        //  personaDAO dao = new personaDAO();          
+         UserDAO dao = new UserDAO();          
 
         //dao.insert(new Persona("Paco","Perez",32));
         //dao.insert(new Persona("Carlos","Perez",54));
@@ -27,8 +29,8 @@ public class Main {
         //personas = dao.selectAll();
         //   personas.forEach(p -> System.out.println(p));
         MainFrame f = new MainFrame(new MainController());
-
         f.setVisible(true);
+        
     }
 
 }

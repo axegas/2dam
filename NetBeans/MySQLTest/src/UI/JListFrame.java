@@ -15,6 +15,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import controller.JListController;
+import java.util.ArrayList;
+import model.Client;
 
 /**
  *
@@ -36,12 +38,16 @@ public class JListFrame extends JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setBounds(300, 200, 600, 600);
+        setBounds(300, 200, 600, 500);
         setTitle("MySQL Test JList");
 
         //---List---
         dlmLeft = control.getListModel();
+        //dlmLeft = new DefaultListModel();
         dlmRight = new DefaultListModel();
+        ArrayList<Client> c = new ArrayList<>();
+        dlmLeft.addAll(c);
+        
 
         lstLeft = new JList(dlmLeft);
         lstRight = new JList(dlmRight);
@@ -79,7 +85,7 @@ public class JListFrame extends JFrame {
         pnlButtons.add(btnLeft);
         pnlButtons.add(btnPrint);
 
-        //---Listeners
+        //---Listeners---
         btnRight.addActionListener(e -> {
             int index = lstLeft.getSelectedIndex();
             if (index >= 0) {
@@ -96,7 +102,13 @@ public class JListFrame extends JFrame {
             }
         });
 
-        btnPrint.addActionListener(e -> control.createPDF(dlmRight));
+        btnPrint.addActionListener(e -> {
+            control.createPDF(dlmRight);
+            for (int i = 0; i < dlmRight.size(); i++) {
+                dlmLeft.addElement(dlmRight.get(i));
+            }
+            dlmRight.removeAllElements();
+        });
 
     }
 }

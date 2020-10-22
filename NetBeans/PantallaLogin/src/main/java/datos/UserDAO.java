@@ -25,13 +25,11 @@ public class UserDAO {
 
     public ArrayList<User> selectAll() {
         ArrayList<User> personas = new ArrayList<>();
-        try (Connection conn = Conexion.getConnection(); PreparedStatement stmt = conn.prepareStatement(SQL_SELECT)) {
+        try (ResultSet rs = Conexion.getResultSet(SQL_SELECT)) {
             User p;
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    p = crearUSer(rs);
-                    personas.add(p);
-                }
+            while (rs.next()) {
+                p = crearUSer(rs);
+                personas.add(p);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -40,11 +38,9 @@ public class UserDAO {
     }
 
     public User selectUser(User u) {
-        try (Connection conn = Conexion.getConnection(); PreparedStatement stmt = conn.prepareStatement("select * from user where nick='" + u.getNick() + "' and password = '" + u.getPassword() + "'")) {
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    u = crearUSer(rs);
-                }
+        try (ResultSet rs = Conexion.getResultSet(SQL_SELECT + " where nick='" + u.getNick() + "' and password = '" + u.getPassword() + "'")) {
+            while (rs.next()) {
+                u = crearUSer(rs);
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -41,6 +41,10 @@ public class MySQLTest {
         
          */
         //Frame f = new Frame(new Controller());
+        
+        
+        
+        
         JListFrame f = new JListFrame(new JListController());
         f.setVisible(true);
        
