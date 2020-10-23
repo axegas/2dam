@@ -42,12 +42,8 @@ public class JListFrame extends JFrame {
         setTitle("MySQL Test JList");
 
         //---List---
-        dlmLeft = control.getListModel();
-        //dlmLeft = new DefaultListModel();
+        dlmLeft = createModelFromArray(control.getListArray());
         dlmRight = new DefaultListModel();
-        ArrayList<Client> c = new ArrayList<>();
-        dlmLeft.addAll(c);
-        
 
         lstLeft = new JList(dlmLeft);
         lstRight = new JList(dlmRight);
@@ -86,29 +82,32 @@ public class JListFrame extends JFrame {
         pnlButtons.add(btnPrint);
 
         //---Listeners---
-        btnRight.addActionListener(e -> {
-            int index = lstLeft.getSelectedIndex();
-            if (index >= 0) {
-                dlmRight.addElement(lstLeft.getSelectedValue());
-                dlmLeft.remove(index);
-            }
-        });
+        btnRight.addActionListener(e -> moveList(dlmLeft, dlmRight, lstLeft));
 
-        btnLeft.addActionListener(e -> {
-            int index = lstRight.getSelectedIndex();
-            if (index >= 0) {
-                dlmLeft.addElement(lstRight.getSelectedValue());
-                dlmRight.remove(index);
-            }
-        });
+        btnLeft.addActionListener(e -> moveList(dlmRight, dlmLeft, lstRight));
 
         btnPrint.addActionListener(e -> {
-            control.createPDF(dlmRight);
+            control.createPDF(dlmRight.toArray());
             for (int i = 0; i < dlmRight.size(); i++) {
                 dlmLeft.addElement(dlmRight.get(i));
             }
             dlmRight.removeAllElements();
         });
+    }
 
+    public DefaultListModel createModelFromArray(ArrayList<Client> clients) {
+        DefaultListModel dlm = new DefaultListModel();
+        for (int i = 0; i < clients.size(); i++) {
+            dlm.add(i, clients.get(i));
+        }
+        return dlm;
+    }
+
+    private void moveList(DefaultListModel dlmOrigen, DefaultListModel dlmDestino, JList lstOrigen) {
+        int index = lstOrigen.getSelectedIndex();
+        if (index >= 0) {
+            dlmDestino.addElement(lstOrigen.getSelectedValue());
+            dlmOrigen.remove(index);
+        }
     }
 }

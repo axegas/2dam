@@ -9,7 +9,6 @@ import model.Client;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import javax.swing.DefaultListModel;
 
 /**
  *
@@ -30,13 +29,12 @@ public class ClientDAO {
 
     public ArrayList<Client> loadClients() {
         ArrayList<Client> clients = new ArrayList<>();
-        try (ResultSet rs = con.getResultSet(SQL_SELECT)) {
+        try (ResultSet rs = con.getResultSet(SQL_SELECT)){            
             Client c;
             while (rs.next()) {
                 c = createClient(rs);
                 clients.add(c);
             }
-            con.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -47,27 +45,11 @@ public class ClientDAO {
         Client c = null;
         try (ResultSet rs = con.getResultSet(SQL_SELECT + " where id = '" + id + "'")) {
             c = createClient(rs);
-            con.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
         return c;
     }   
-
-    public DefaultListModel loadClientsModel() {
-        DefaultListModel clients = new DefaultListModel();
-        try (ResultSet rs = con.getResultSet(SQL_SELECT)) {
-            Client c;
-            while (rs.next()) {
-                c = createClient(rs);
-                clients.addElement(c);
-            }
-            con.close();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return clients;
-    }
 
     private Client createClient(ResultSet rs) throws SQLException {
         String id = rs.getString(1);

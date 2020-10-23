@@ -16,7 +16,6 @@ import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
-import javax.swing.DefaultListModel;
 
 /**
  *
@@ -25,35 +24,31 @@ import javax.swing.DefaultListModel;
 public class JListController {
 
     private final ClientDAO conn;
-    private final DefaultListModel<Client> clients;
     private final ArrayList<Client> clientsArray;
 
     public JListController() {
         this.conn = new ClientDAO();
-        this.clients = conn.loadClientsModel();
         this.clientsArray = conn.loadClients();
     }
 
-    public DefaultListModel getListModel() {
-        return clients;
-    }
-    
-    public ArrayList<Client> getListArray(){
+    public ArrayList<Client> getListArray() {
         return clientsArray;
     }
 
-    public void createPDF(DefaultListModel dlmRight) {
+    public void createPDF(Object[] dlmRight) {//recibe un vector de objetos
         try {
-            Document doc = new Document(PageSize.A4, 50, 50, 100, 72);
-            PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream("Lista Clientes.pdf"));
-            doc.open();
-
+            //crea el texto y lo inserta en la variable 'text'
             Client c;
             String text = "Lista de clientes:\n\n";
-            for (int k = 0; k < dlmRight.size(); k++) {
-                c = (Client) dlmRight.get(k);
+            for (Object dlmRight1 : dlmRight) {
+                c = (Client) dlmRight1; //castea los elementos del vector a tipo 'Client'
                 text += c.muestraCliente();
             }
+            
+            //esta parte es fija, no se cambia
+            Document doc = new Document(PageSize.A4, 50, 50, 100, 72);
+            PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream("Lista Clientes.pdf"));
+            doc.open();            
             Paragraph p = new Paragraph(text);
             p.setAlignment(Element.ALIGN_JUSTIFIED);
             doc.add(p);
@@ -61,7 +56,6 @@ public class JListController {
         } catch (DocumentException | FileNotFoundException e) {
             e.printStackTrace();
         }
-
     }
 
 }

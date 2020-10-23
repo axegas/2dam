@@ -25,13 +25,11 @@ public class personaDAO {
 
     public ArrayList<Persona> selectAll() {
         ArrayList<Persona> personas = new ArrayList<>();
-        try (Connection conn = Conexion.getConnection(); PreparedStatement stmt = conn.prepareStatement(SQL_SELECT)) {
-            Persona p;
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    p = crearPersona(rs);
-                    personas.add(p);
-                }
+        Persona p;
+        try (ResultSet rs = Conexion.getResultSet(SQL_SELECT)) {
+            while (rs.next()) {
+                p = crearPersona(rs);
+                personas.add(p);
             }
         } catch (SQLException e) {
             e.printStackTrace();

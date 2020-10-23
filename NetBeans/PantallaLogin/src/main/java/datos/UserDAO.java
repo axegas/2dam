@@ -62,7 +62,7 @@ public class UserDAO {
         int id = rs.getInt(1);
         String nick = rs.getString(2);
         String password = rs.getString(3);
-        User p = new User(id, nick, password);
-        return p;
+        User u = new User(id, nick, password);
+        return u;
     }
 }

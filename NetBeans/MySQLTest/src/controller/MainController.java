@@ -8,7 +8,6 @@ package controller;
 import model.Client;
 import DAO.ClientDAO;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 /**
  *
@@ -48,8 +47,6 @@ public class MainController {
 
     public Client search(String ID) {
         Client c = null;
-        
-        //esto la forma tradicional
         for (int i = 0; i < clients.size(); i++) {
             if (clients.get(i).getId().equals(ID)) {
                 position = i;

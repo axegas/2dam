@@ -7,6 +7,8 @@ package datos;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -32,6 +34,12 @@ public class Conexion {
 
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL, USUARIO, CLAVE);
+    }
+
+    public static ResultSet getResultSet(String sql) throws SQLException {
+        PreparedStatement stmt = getConnection().prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+        return rs;
     }
 
 }
