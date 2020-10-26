@@ -27,10 +27,6 @@ public class MainActivity extends AppCompatActivity {
         txtNum1 = (EditText) findViewById(R.id.txtNum1);
         txtNum2 = (EditText) findViewById(R.id.txtNum2);
 
-
-
-
-
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 String resultado="";
@@ -58,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
                 }catch (Exception e){
 
                 }
-
 
                 lblResultado.setText(resultado);
                 txtNum2.setText("");
