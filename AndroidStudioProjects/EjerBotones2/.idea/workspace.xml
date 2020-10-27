@@ -6,13 +6,22 @@
     </shared>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dc82e22a-d5ba-464b-a423-b89fa63049a9" name="Default Changelist" comment="" />
+    <list default="true" id="dc82e22a-d5ba-464b-a423-b89fa63049a9" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../../.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../NetBeans/ProyectoPractica1_1/src/main/java/datos/Conexion.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../NetBeans/ProyectoPractica1_1/src/main/java/datos/Conexion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../NetBeans/ProyectoPractica1_1/src/main/java/datos/UsuarioDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../NetBeans/ProyectoPractica1_1/src/main/java/datos/UsuarioDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../NetBeans/ProyectoPractica1_1/src/main/java/test/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../NetBeans/ProyectoPractica1_1/src/main/java/test/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../NetBeans/ProyectoPractica1_2/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../NetBeans/ProyectoPractica1_2/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../NetBeans/ProyectoPractica1_2/src/main/java/datos/CocheDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../NetBeans/ProyectoPractica1_2/src/main/java/datos/CocheDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../NetBeans/ProyectoPractica1_2/src/main/java/datos/Conexion.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../NetBeans/ProyectoPractica1_2/src/main/java/datos/Conexion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../NetBeans/ProyectoPractica1_2/src/main/java/datos/PropietarioDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../NetBeans/ProyectoPractica1_2/src/main/java/datos/PropietarioDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../NetBeans/ProyectoPractica1_2/src/main/java/test/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../NetBeans/ProyectoPractica1_2/src/main/java/test/Main.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="ZY864868" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />

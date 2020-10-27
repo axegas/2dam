@@ -18,11 +18,13 @@ import java.util.ArrayList;
  */
 public class UsuarioDAO {
 
+    //variablos de acceso a bbdd
     private final static String SQL_SELECT = "select * from usuario";
     private final static String SQL_INSERT = "insert into usuario(id_usuario,usuario,password)values(?,?,?)";
     private final static String SQL_UPDATE = "update usuario set usuario=?,password=? where id_usuario=?";
     private final static String SQL_DELETE = "delete from usuario where id_usuario=?";
 
+    //metodo para seleccionar todos los usuarios y meterlos en un arraylist
     public ArrayList<Usuario> selectAll() {
         ArrayList<Usuario> usuarios = new ArrayList<>();
         Usuario u;
@@ -38,7 +40,8 @@ public class UsuarioDAO {
         }
         return usuarios;
     }
-
+    
+    //insertar un usuario en la bd
     public int insert(Usuario u) {
         int registros = 0;
         try (Connection conn = Conexion.getConnection();
@@ -53,6 +56,7 @@ public class UsuarioDAO {
         return registros;
     }
 
+    //actualizar los datos de un usuario
     public int update(Usuario u) {
         int registros = 0;
         try (Connection conn = Conexion.getConnection();
@@ -67,6 +71,7 @@ public class UsuarioDAO {
         return registros;
     }
 
+    //eleminiar un usuario 
     public int delete(Usuario u) {
         int registros = 0;
         try (Connection conn = Conexion.getConnection(); PreparedStatement stmt = conn.prepareStatement(SQL_DELETE)) {
@@ -78,7 +83,7 @@ public class UsuarioDAO {
         return registros;
     }
 
-    //este método sirve para, a partir del ResultSet, obtener los datos necesarios para crear el Usuario
+    //este método sirve para, a partir del ResultSet, obtener los datos necesarios para crear el Usuario.
     //una vez está creado, lo devuelve para que el método pueda select pueda añadirlo al arraylist
     private Usuario crearUsuario(ResultSet rs) throws SQLException {
         int id_usuario = rs.getInt("id_usuario");

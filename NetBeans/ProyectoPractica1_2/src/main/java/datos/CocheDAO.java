@@ -19,11 +19,13 @@ import java.util.ArrayList;
  */
 public class CocheDAO {
 
+    //variablos de acceso a bbdd
     private final static String SQL_SELECT = "select * from coches";
     private final static String SQL_INSERT = "insert into coches(Matricula,Marca,Precio,DNI)values(?,?,?,?)";
     private final static String SQL_UPDATE = "update coches set Marca=?,Precio=?,DNI=? where Matricula=?";
     private final static String SQL_DELETE = "delete from coches where Matricula=?";
 
+    //metodo para seleccionar todos los coches y meterlos en un arraylist
     public ArrayList<Coche> selectAll() {
         ArrayList<Coche> coches = new ArrayList<>();
         Coche c;
@@ -40,6 +42,7 @@ public class CocheDAO {
         return coches;
     }
 
+    //dado el DNI de un propietario, devuelve un arraylist de los coches de dicho propietario
     public ArrayList<Coche> selectByDNI(String DNI) {
         ArrayList<Coche> coches = new ArrayList<>();
         Coche c;
@@ -56,12 +59,13 @@ public class CocheDAO {
         return coches;
     }
 
+    //insertar un coche en la bd
     public int insert(Coche c) {
         int registros = 0;
         PropietarioDAO pdao = new PropietarioDAO();
         Propietario p = pdao.selectByDNI(c.getDNI());
-        if (p == null) {
-            return -1;
+        if (p == null) {//con esta comparación, valido si existe algun propietario con ese DNI
+            registros = -1;
         } else {
             try (Connection conn = Conexion.getConnection(); PreparedStatement stmt = conn.prepareStatement(SQL_INSERT)) {
                 stmt.setString(1, c.getMatricula());
@@ -72,10 +76,11 @@ public class CocheDAO {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            return registros;
         }
+        return registros;
     }
 
+    //actualizar los datos de un coche
     public int update(Coche c) {
         int registros = 0;
         try (Connection conn = Conexion.getConnection(); PreparedStatement stmt = conn.prepareStatement(SQL_UPDATE)) {
@@ -90,6 +95,7 @@ public class CocheDAO {
         return registros;
     }
 
+    //eleminiar un coche 
     public int delete(Coche c) {
         int registros = 0;
         try (Connection conn = Conexion.getConnection(); PreparedStatement stmt = conn.prepareStatement(SQL_DELETE)) {
@@ -101,6 +107,8 @@ public class CocheDAO {
         return registros;
     }
 
+    //este método sirve para, a partir del ResultSet, obtener los datos necesarios para crear el coche.
+    //una vez está creado, lo devuelve para que el método pueda select pueda añadirlo al arraylist
     private Coche crearCoche(ResultSet rs) throws SQLException {
         String matricula = rs.getString("Matricula");
         String marca = rs.getString("Marca");

@@ -19,11 +19,13 @@ import java.util.ArrayList;
  */
 public class PropietarioDAO {
 
+    //variablos de acceso a bbdd
     private final static String SQL_SELECT = "select * from propietarios";
     private final static String SQL_INSERT = "insert into propietarios(DNI,Nombre,Edad)values(?,?,?)";
     private final static String SQL_UPDATE = "update propietarios set Nombre=?,edad=? where DNI=?";
     private final static String SQL_DELETE = "delete from propietarios where DNI=?";
 
+    //metodo para seleccionar todos los propietarios y meterlos en un arraylist
     public ArrayList<Propietario> selectAll() {
         ArrayList<Propietario> propietarios = new ArrayList<>();
         Propietario p;
@@ -40,6 +42,7 @@ public class PropietarioDAO {
         return propietarios;
     }
 
+    //devuelve los datos de un propietario a partir de su DNI
     public Propietario selectByDNI(String DNI) {
         Propietario p = null;
         Coche c;
@@ -55,6 +58,7 @@ public class PropietarioDAO {
         return p;
     }
 
+    //insertar un propietario en la bd
     public int insert(Propietario p) {
         int registros = 0;
         try (Connection conn = Conexion.getConnection(); PreparedStatement stmt = conn.prepareStatement(SQL_INSERT)) {
@@ -68,6 +72,7 @@ public class PropietarioDAO {
         return registros;
     }
 
+    //actualizar los datos de un propietario
     public int update(Propietario p) {
         int registros = 0;
         try (Connection conn = Conexion.getConnection(); PreparedStatement stmt = conn.prepareStatement(SQL_UPDATE)) {
@@ -81,6 +86,7 @@ public class PropietarioDAO {
         return registros;
     }
 
+    //eleminiar un propietario 
     public int delete(Propietario p) {
         int registros = 0;
         try (Connection conn = Conexion.getConnection(); PreparedStatement stmt = conn.prepareStatement(SQL_DELETE)) {
@@ -92,17 +98,20 @@ public class PropietarioDAO {
         return registros;
     }
     
+    //eliminar un propietario y todos los coches que tiene asociados
     public int deleteEnCascada(Propietario p){
         int registros = 0;
         CocheDAO cdao = new CocheDAO();
-        ArrayList<Coche> coches = cdao.selectByDNI(p.getDNI());
-        registros = this.delete(p);
+        ArrayList<Coche> coches = cdao.selectByDNI(p.getDNI());        
         for(int i=0;i<coches.size();i++){
             cdao.delete(coches.get(i));
-        }        
+        }  
+        registros = this.delete(p);
         return registros;
     }
 
+    //este método sirve para, a partir del ResultSet, obtener los datos necesarios para crear el propietario.
+    //una vez está creado, lo devuelve para que el método pueda select pueda añadirlo al arraylist
     private Propietario crearPropietario(ResultSet rs) throws SQLException {
         String DNI = rs.getString("DNI");
         String nombre = rs.getString("Nombre");
