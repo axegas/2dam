@@ -115,7 +115,7 @@ public class Frame extends JFrame {
         pnlMisc.add(cbKeyboardPro);
 
         btnPreview.addActionListener(b -> showPrice());
-        btnPrint.addActionListener(b -> createPDF());
+        btnPrint.addActionListener(b -> control.createPDF(txtaResult.getText()));
 
     }
 
@@ -171,21 +171,4 @@ public class Frame extends JFrame {
         txtaResult.append("Total: " + total);
         btnPrint.setEnabled(true);
     }
-
-    public void createPDF() {
-        try {
-            String txt = txtaResult.getText();
-            Document doc = new Document(PageSize.A4, 50, 50, 100, 72);
-            PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream("Factura.pdf"));
-            doc.open();
-            Paragraph p = new Paragraph("Total factura:\n" + txt);
-            p.setAlignment(Element.ALIGN_JUSTIFIED);
-            doc.add(p);
-            doc.close();
-            writer.close();
-        } catch (DocumentException | FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
 }

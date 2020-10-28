@@ -44,13 +44,14 @@ public class JListController {
                 c = (Client) dlmRight1; //castea los elementos del vector a tipo 'Client'
                 text += c.muestraCliente();
             }
-            
+
             //esta parte es fija, no se cambia
             Document doc = new Document(PageSize.A4, 50, 50, 100, 72);
-            PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream("Lista Clientes.pdf"));
-            doc.open();            
+            PdfWriter.getInstance(doc, new FileOutputStream("Lista Clientes.pdf"));
+            doc.open();
             Paragraph p = new Paragraph(text);
             p.setAlignment(Element.ALIGN_JUSTIFIED);
+
             doc.add(p);
             doc.close();
         } catch (DocumentException | FileNotFoundException e) {
