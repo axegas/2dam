@@ -36,7 +36,7 @@ public class Frame extends JFrame {
         this.control = new Controller();
         initComponents();
         setListeners();
-        first(true);
+        start(true);
     }
 
     private void initComponents() {
@@ -93,7 +93,7 @@ public class Frame extends JFrame {
 
     }
 
-    private void first(boolean state) {
+    private void start(boolean state) {
         txtPlayer1.setEnabled(state);
         btnPlayer1.setEnabled(state);
         btnPlayer2.setEnabled(!state);
@@ -101,7 +101,7 @@ public class Frame extends JFrame {
     }
 
     private void finish(String str) {
-        first(true);
+        start(true);
         control.start();
         JOptionPane.showMessageDialog(this, str);
         btnImage.setIcon(control.nextImage());
@@ -112,7 +112,7 @@ public class Frame extends JFrame {
         btnPlayer1.addActionListener(e -> {
             wordResult = control.firstPlayer(txtPlayer1.getPassword());
             lblWord.setText(wordResult);
-            first(false);
+            start(false);
         });
 
         btnPlayer2.addActionListener(e -> {

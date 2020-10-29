@@ -62,14 +62,6 @@ public final class Controller {
         return wordResult;
     }
 
-    public boolean getIsLetter() {
-        return isLetter;
-    }
-
-    public int getIndex() {
-        return index;
-    }
-
     public ImageIcon nextImage() {
         index++;
         return images[index];
