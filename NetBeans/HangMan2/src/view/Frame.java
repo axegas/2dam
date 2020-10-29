@@ -103,7 +103,9 @@ public class Frame extends JFrame {
     private void finish(String str) {
         first(true);
         control.start();
-        JOptionPane.showMessageDialog(this, str);        
+        JOptionPane.showMessageDialog(this, str);
+        btnImage.setIcon(control.nextImage());
+        txtPlayer1.setText("");
     }
 
     private void setListeners() {
@@ -119,21 +121,24 @@ public class Frame extends JFrame {
             if (str.length() != 1) {
                 JOptionPane.showMessageDialog(this, "ONLY ONE LETTER!");
             } else {
-                char c = str.toUpperCase().charAt(0);
-                wordResult = control.secondPlayer(c);
+                wordResult = control.secondPlayer(str.toUpperCase().charAt(0));
                 lblWord.setText(wordResult);
-                if (!control.getIsLetter()) {
-                    btnImage.setIcon(control.nextImage());
-                    if (control.getIndex() == 4) {
-                        finish("YOU LOST!");
-                    }
-                } else {
-                    if (!wordResult.contains("-")) {
+
+                switch (control.getResult()) {
+                    case 1:
                         finish("YOU WON!");
-                    }
+                        break;
+                    case 2:
+                        btnImage.setIcon(control.nextImage());
+                        break;
+                    case 3:
+                        btnImage.setIcon(control.nextImage());
+                        finish("YOU LOST!");
+                        break;
+                    default:
+                        break;
                 }
             }
         });
     }
-
 }

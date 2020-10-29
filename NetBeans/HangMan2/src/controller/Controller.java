@@ -18,6 +18,7 @@ public final class Controller {
     private String wordToGuessString;
     private String wordResult;
     private boolean isLetter;
+    private int result;
 
     public Controller() {
         start();
@@ -25,6 +26,7 @@ public final class Controller {
 
     public void start() {
         index = -1;
+        result = 0;
         isLetter = false;
         images = new ImageIcon[5];
         for (int i = 0; i < images.length; i++) {
@@ -45,6 +47,7 @@ public final class Controller {
 
     public String secondPlayer(char c) {
         isLetter = false;
+        result = 0;
         String aux = "";
         for (int i = 0; i < wordToGuessString.length(); i++) {
             if (wordToGuessString.charAt(i) == c) {
@@ -55,6 +58,7 @@ public final class Controller {
             }
         }
         wordResult = aux;
+        setResult();      
         return wordResult;
     }
 
@@ -69,5 +73,23 @@ public final class Controller {
     public ImageIcon nextImage() {
         index++;
         return images[index];
+    }
+    
+    public int getResult(){
+        return result;
+    }
+
+    private void setResult() {
+         if (isLetter) {
+            if (wordResult.equals(wordToGuessString)) {
+                result = 1;
+            } 
+        } else {
+            if(index != 3){
+                result = 2;
+            }else{
+                result = 3;
+            }
+        }
     }
 }
