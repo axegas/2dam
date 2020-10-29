@@ -5,11 +5,11 @@
  */
 package view;
 
+import controller.Controller;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -29,16 +29,14 @@ public class Frame extends JFrame {
     private JLabel lblTitle, lblLetter, lblWord;
     private JPasswordField txtPlayer1;
     private JTextField txtPlayer2;
-    private char[] wordToGuessArray;
     private String wordResult;
-    private String wordToGuessString;
-    private ImageIcon[] images;
-    private int index;
+    private final Controller control;
 
     public Frame() {
+        this.control = new Controller();
         initComponents();
         setListeners();
-        start();
+        first(true);
     }
 
     private void initComponents() {
@@ -47,10 +45,11 @@ public class Frame extends JFrame {
         setBounds(200, 200, 700, 500);
         setTitle("Hangman");
 
-        //buttons
-        btnImage = new JButton();
+        //buttons        
         btnPlayer1 = new JButton("Accept");
         btnPlayer2 = new JButton("Accept");
+        btnImage = new JButton();
+        btnImage.setIcon(control.nextImage());
 
         //labels
         lblTitle = new JLabel("Word to guess");
@@ -94,73 +93,47 @@ public class Frame extends JFrame {
 
     }
 
-    private void start() {
-        index = 0;
-        images = new ImageIcon[5];
-        for (int i = 0; i < images.length; i++) {
-            images[i] = new ImageIcon(getClass().getResource("/images/foto" + i + ".png"));
-        }
-        btnPlayer2.setEnabled(false);
-        txtPlayer2.setEnabled(false);
-        nextImage();
+    private void first(boolean state) {
+        txtPlayer1.setEnabled(state);
+        btnPlayer1.setEnabled(state);
+        btnPlayer2.setEnabled(!state);
+        txtPlayer2.setEnabled(!state);
     }
 
-    public void nextImage() {
-        btnImage.setIcon(images[index]);
-        index++;
+    private void finish(String str) {
+        first(true);
+        control.start();
+        JOptionPane.showMessageDialog(this, str);        
     }
 
     private void setListeners() {
         btnPlayer1.addActionListener(e -> {
-            wordToGuessArray = txtPlayer1.getPassword();
-            txtPlayer1.setEnabled(false);
-            btnPlayer1.setEnabled(false);
-            btnPlayer2.setEnabled(true);
-            txtPlayer2.setEnabled(true);
-            wordResult = "";
-            wordToGuessString = "";
-            for (int i = 0; i < wordToGuessArray.length; i++) {
-                wordResult += "-";
-                wordToGuessString += wordToGuessArray[i];
-            }
+            wordResult = control.firstPlayer(txtPlayer1.getPassword());
             lblWord.setText(wordResult);
-            wordToGuessString = wordToGuessString.toUpperCase();
+            first(false);
         });
 
         btnPlayer2.addActionListener(e -> {
-            if (txtPlayer2.getText().length() != 1) {
+            String str = txtPlayer2.getText();
+            txtPlayer2.setText("");
+            if (str.length() != 1) {
                 JOptionPane.showMessageDialog(this, "ONLY ONE LETTER!");
-                txtPlayer2.setText("");
             } else {
-                char c = txtPlayer2.getText().toUpperCase().charAt(0);
-                boolean isLetter = false;
-                String aux = "";
-                for (int i = 0; i < wordToGuessString.length(); i++) {
-                    if (wordToGuessString.charAt(i) == c) {
-                        isLetter = true;
-                        aux += c;
-                    } else {
-                        aux += wordResult.charAt(i);
-                    }
-                }
-                wordResult = aux;
-                txtPlayer2.setText("");
+                char c = str.toUpperCase().charAt(0);
+                wordResult = control.secondPlayer(c);
                 lblWord.setText(wordResult);
-                if (!isLetter) {
-                    nextImage();
-                    if (wordResult.contains("-") && index == 5) {
-                        btnPlayer2.setEnabled(false);
-                        txtPlayer2.setEnabled(false);
-                        JOptionPane.showMessageDialog(this, "YOU LOST! The correct word is: " + wordToGuessString);
+                if (!control.getIsLetter()) {
+                    btnImage.setIcon(control.nextImage());
+                    if (control.getIndex() == 4) {
+                        finish("YOU LOST!");
                     }
                 } else {
                     if (!wordResult.contains("-")) {
-                        btnPlayer2.setEnabled(false);
-                        txtPlayer2.setEnabled(false);
-                        JOptionPane.showMessageDialog(this, "YOU WON!");
+                        finish("YOU WON!");
                     }
                 }
             }
         });
     }
+
 }
