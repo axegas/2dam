@@ -27,13 +27,11 @@ public class UsuarioDAO {
     //metodo para seleccionar todos los usuarios y meterlos en un arraylist
     public ArrayList<Usuario> selectAll() {
         ArrayList<Usuario> usuarios = new ArrayList<>();
-        Usuario u;
         try (Connection conn = Conexion.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(SQL_SELECT);
                 ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
-                u = crearUsuario(rs);
-                usuarios.add(u);
+                usuarios.add(crearUsuario(rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();

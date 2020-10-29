@@ -28,13 +28,11 @@ public class PropietarioDAO {
     //metodo para seleccionar todos los propietarios y meterlos en un arraylist
     public ArrayList<Propietario> selectAll() {
         ArrayList<Propietario> propietarios = new ArrayList<>();
-        Propietario p;
         try (Connection conn = Conexion.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(SQL_SELECT);
                 ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
-                p = crearPropietario(rs);
-                propietarios.add(p);
+                propietarios.add(crearPropietario(rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -45,7 +43,6 @@ public class PropietarioDAO {
     //devuelve los datos de un propietario a partir de su DNI
     public Propietario selectByDNI(String DNI) {
         Propietario p = null;
-        Coche c;
         try (Connection conn = Conexion.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(SQL_SELECT + " where DNI = '" + DNI + "'");
                 ResultSet rs = stmt.executeQuery()) {

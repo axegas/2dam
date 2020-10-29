@@ -28,13 +28,11 @@ public class CocheDAO {
     //metodo para seleccionar todos los coches y meterlos en un arraylist
     public ArrayList<Coche> selectAll() {
         ArrayList<Coche> coches = new ArrayList<>();
-        Coche c;
         try (Connection conn = Conexion.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(SQL_SELECT);
                 ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
-                c = crearCoche(rs);
-                coches.add(c);
+                coches.add(crearCoche(rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -45,13 +43,11 @@ public class CocheDAO {
     //dado el DNI de un propietario, devuelve un arraylist de los coches de dicho propietario
     public ArrayList<Coche> selectByDNI(String DNI) {
         ArrayList<Coche> coches = new ArrayList<>();
-        Coche c;
         try (Connection conn = Conexion.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(SQL_SELECT + " where DNI = '" + DNI + "'");
                 ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
-                c = crearCoche(rs);
-                coches.add(c);
+                coches.add(crearCoche(rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();

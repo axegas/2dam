@@ -25,7 +25,7 @@ public class Main {
 
         daoP = new PropietarioDAO();
         daoC = new CocheDAO();
-        int opc = 0;
+        int opc;
         do {
             opc = menu();
             switch (opc) {
@@ -112,7 +112,6 @@ public class Main {
         } else {
             System.out.println("Error al insertar");
         }
-
     }
 
     //metodo para insertar un propietario en la base de datos
