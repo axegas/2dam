@@ -6,16 +6,8 @@
 package View;
 
 import Controller.Controller;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -170,5 +162,20 @@ public class Frame extends JFrame {
         txtaResult.append("--------------------------------------------------------------------------\n");
         txtaResult.append("Total: " + total);
         btnPrint.setEnabled(true);
+    }
+    
+    public String getSelected(boolean selected, JRadioButton button){
+        
+          if (!selected && button.isSelected()) {
+                String value = button.getText();
+                //int prize = Integer.parseInt(prMicros[i][1]);
+                //total += prize;
+                //txtaResult.append("Processor -> " + value + ": " + prize + "\n");
+                selected = true;
+            }
+        
+        return "";
+        
+        
     }
 }
