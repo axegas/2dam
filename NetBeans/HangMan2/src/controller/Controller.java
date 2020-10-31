@@ -15,7 +15,7 @@ public final class Controller {
 
     private ImageIcon[] images;
     private int index;
-    private String wordToGuessString;
+    private String wordToGuess;
     private String wordResult;
     private boolean isLetter;
     private int result;
@@ -36,12 +36,12 @@ public final class Controller {
 
     public String firstPlayer(char[] wordToGuessArray) {
         wordResult = "";
-        wordToGuessString = "";
+        wordToGuess = "";
         for (int i = 0; i < wordToGuessArray.length; i++) {
             wordResult += "-";
-            wordToGuessString += wordToGuessArray[i];
+            wordToGuess += wordToGuessArray[i];
         }
-        wordToGuessString = wordToGuessString.toUpperCase();
+        wordToGuess = wordToGuess.toUpperCase();
         return wordResult;
     }
 
@@ -49,8 +49,8 @@ public final class Controller {
         isLetter = false;
         result = 0;
         String aux = "";
-        for (int i = 0; i < wordToGuessString.length(); i++) {
-            if (wordToGuessString.charAt(i) == c) {
+        for (int i = 0; i < wordToGuess.length(); i++) {
+            if (wordToGuess.charAt(i) == c) {
                 isLetter = true;
                 aux += c;
             } else {
@@ -73,7 +73,7 @@ public final class Controller {
 
     private void setResult() {
          if (isLetter) {
-            if (wordResult.equals(wordToGuessString)) {
+            if (wordResult.equals(wordToGuess)) {
                 result = 1;
             } 
         } else {

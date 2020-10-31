@@ -75,6 +75,7 @@ public class Frame extends JFrame {
         pnlPlayer1.setBorder(BorderFactory.createTitledBorder("Player 1"));
         pnlPlayer2.setBorder(BorderFactory.createTitledBorder("Player 2"));
 
+        //add elements
         add(pnlMain);
         pnlMain.add(pnlLeft);
         pnlMain.add(pnlRight);
@@ -104,7 +105,7 @@ public class Frame extends JFrame {
         start(true);
         control.start();
         JOptionPane.showMessageDialog(this, str);
-        btnImage.setIcon(control.nextImage());
+        //btnImage.setIcon(control.nextImage());
         txtPlayer1.setText("");
     }
 

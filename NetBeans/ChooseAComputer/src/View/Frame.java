@@ -27,8 +27,7 @@ public class Frame extends JFrame {
     private final String[][] prMonitors = {{"LG1", "300"}, {"LG2", "350"}, {"HP1", "200"}, {"HP2", "250"}};
     private final String[][] prRam = {{"RAM 1GB", "300"}, {"RAM 2GB", "350"}, {"RAM 4GB", "200"}, {"RAM 8GB", "250"}};
     private final String[][] prMisc = {{"Mouse normal", "300"}, {"Mouse pro", "350"}, {"Keyboard normal", "200"}, {"Keyboard pro", "250"}};
-
-    private Controller control;
+    private final Controller control;
 
     private JPanel pnlMain, pnlMicros, pnlRam, pnlMonitors, pnlMisc, pnlOptions, pnlResult;
     private JTextArea txtaResult;
@@ -48,10 +47,10 @@ public class Frame extends JFrame {
         setTitle("Choose a Computer");
 
         pnlMain = new JPanel(new BorderLayout());
-        pnlMicros = new JPanel(new GridLayout(4, 1, 10, 10));
-        pnlRam = new JPanel(new GridLayout(4, 1, 10, 10));
-        pnlMonitors = new JPanel(new GridLayout(4, 1, 10, 10));
-        pnlMisc = new JPanel(new GridLayout(4, 1, 10, 10));
+        pnlMicros = new JPanel(new GridLayout(prMicros.length, 1, 10, 10));
+        pnlRam = new JPanel(new GridLayout(prRam.length, 1, 10, 10));
+        pnlMonitors = new JPanel(new GridLayout(prMonitors.length, 1, 10, 10));
+        pnlMisc = new JPanel(new GridLayout(prMisc.length, 1, 10, 10));
         pnlOptions = new JPanel(new GridLayout(1, 4, 10, 10));
         pnlResult = new JPanel(new BorderLayout());
 
@@ -63,9 +62,9 @@ public class Frame extends JFrame {
         pnlOptions.add(pnlMonitors);
         pnlOptions.add(pnlMisc);
 
-        pnlMicros.setBorder(BorderFactory.createTitledBorder("Micros"));
+        pnlMicros.setBorder(BorderFactory.createTitledBorder("Processor"));
         pnlRam.setBorder(BorderFactory.createTitledBorder("RAM"));
-        pnlMonitors.setBorder(BorderFactory.createTitledBorder("Monitors"));
+        pnlMonitors.setBorder(BorderFactory.createTitledBorder("Monitor"));
         pnlMisc.setBorder(BorderFactory.createTitledBorder("Miscellanea"));
 
         btnPrint = new JButton("Print");
@@ -114,68 +113,42 @@ public class Frame extends JFrame {
     private void showPrice() {
 
         txtaResult.setText("");
-        String txt = "";
         int total = 0;
-        boolean microSelected = false;
-        boolean monitorSelected = false;
-        boolean ramSelected = false;
 
-        for (int i = 0; i < pnlMicros.getComponentCount(); i++) {
-            JRadioButton rbMicro = (JRadioButton) pnlMicros.getComponent(i);
-            JRadioButton rbRam = (JRadioButton) pnlRam.getComponent(i);
-            JRadioButton rbMonitor = (JRadioButton) pnlMonitors.getComponent(i);
-
-            if (!microSelected && rbMicro.isSelected()) {
-                String value = rbMicro.getText();
-                int prize = Integer.parseInt(prMicros[i][1]);
-                total += prize;
-                txtaResult.append("Processor -> " + value + ": " + prize + "\n");
-                microSelected = true;
-            }
-            if (!ramSelected && rbRam.isSelected()) {
-                String value = rbRam.getText();
-                int prize = Integer.parseInt(prRam[i][1]);
-                total += prize;
-                txtaResult.append("RAM -> " + value + ": " + prize + "\n");
-                ramSelected = true;
-            }
-            if (!monitorSelected && rbMonitor.isSelected()) {
-                String value = rbMonitor.getText();
-                int prize = Integer.parseInt(prMonitors[i][1]);
-                total += prize;
-                txtaResult.append("Monitor -> " + value + ": " + prize + "\n");
-                monitorSelected = true;
-            }
-
-        }
+        total += getPrizeButtons("Processor", pnlMicros, prMicros);
+        total += getPrizeButtons("RAM", pnlRam, prRam);
+        total += getPrizeButtons("Monitor", pnlMonitors, prMonitors);
         txtaResult.append("Extras:\n");
-        for (int i = 0; i < pnlMisc.getComponentCount(); i++) {
-            JCheckBox cbAux = (JCheckBox) pnlMisc.getComponent(i);
-            if (cbAux.isSelected()) {
-                String value = cbAux.getText();
-                int prize = Integer.parseInt(prMisc[i][1]);
-                total += prize;
-                txtaResult.append("\t" + value + ": " + prize + "\n");
-            }
-
-        }
+        total += getPrizeCheck(pnlMisc, prMisc);
+        
         txtaResult.append("--------------------------------------------------------------------------\n");
         txtaResult.append("Total: " + total);
         btnPrint.setEnabled(true);
     }
-    
-    public String getSelected(boolean selected, JRadioButton button){
-        
-          if (!selected && button.isSelected()) {
+
+    public int getPrizeButtons(String element, JPanel panel, String[][] prizes) {
+        int prize = 0;
+        for (int i = 0; i < panel.getComponentCount(); i++) {
+            JRadioButton button = (JRadioButton) panel.getComponent(i);
+            if (button.isSelected()) {
                 String value = button.getText();
-                //int prize = Integer.parseInt(prMicros[i][1]);
-                //total += prize;
-                //txtaResult.append("Processor -> " + value + ": " + prize + "\n");
-                selected = true;
+                prize = Integer.parseInt(prizes[i][1]);
+                txtaResult.append(element + " -> " + value + ": " + prize + "\n");
             }
-        
-        return "";
-        
-        
+        }
+        return prize;
+    }
+
+    public int getPrizeCheck(JPanel panel, String[][] prizes) {
+        int prize = 0;
+        for (int i = 0; i < panel.getComponentCount(); i++) {
+            JCheckBox checkBox = (JCheckBox) panel.getComponent(i);
+            if (checkBox.isSelected()) {
+                String value = checkBox.getText();
+                prize = Integer.parseInt(prizes[i][1]);
+                txtaResult.append("\t" + value + ": " + prize + "\n");
+            }
+        }
+        return prize;
     }
 }
