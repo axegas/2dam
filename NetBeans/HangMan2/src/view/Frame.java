@@ -104,9 +104,17 @@ public class Frame extends JFrame {
     private void finish(String str) {
         start(true);
         control.start();
-        JOptionPane.showMessageDialog(this, str);
-        //btnImage.setIcon(control.nextImage());
-        txtPlayer1.setText("");
+        int seleccion = JOptionPane.showOptionDialog(this, str + "\nPlay again?", "Finish", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Yes", "No"}, "Yes");
+        System.out.println(seleccion);
+        if (seleccion == 0) {
+            btnImage.setIcon(control.nextImage());
+            txtPlayer1.setText("");
+            txtPlayer2.setText("");
+            lblWord.setText("");
+        } else {
+            txtPlayer1.setEnabled(false);
+            btnPlayer1.setEnabled(false);
+        }
     }
 
     private void setListeners() {
