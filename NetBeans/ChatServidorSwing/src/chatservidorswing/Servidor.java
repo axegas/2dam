@@ -65,14 +65,14 @@ public class Servidor extends JFrame {
         Paquete paqueteEntrada;
 
         try {
-            servidorCliente = new ServerSocket(Util.PUERTO_SERVIDOR());
+            servidorCliente = new ServerSocket(9000);
             while (true) {
                 socketRecibido = servidorCliente.accept();
                 ObjectInputStream datosEntrada = new ObjectInputStream(socketRecibido.getInputStream());
                 paqueteEntrada = (Paquete) datosEntrada.readObject();
                 if (paqueteEntrada.getDestino() != null) {
                     chat.append(paqueteEntrada + " ***enviado a*** " + paqueteEntrada.getDestino() + "\n");
-                    paqueteEntrada.send(paqueteEntrada.getDestino().getIp(), Util.PUERTO_CLIENTE());                    
+                    paqueteEntrada.send(paqueteEntrada.getDestino().getIp(), 9999);                    
                 } else {
                     usuarios.add(paqueteEntrada.getOrigen());
                     Paquete p = new Paquete(null, null, "");

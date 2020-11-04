@@ -56,7 +56,8 @@ public class Cliente extends JFrame {
     private void conectar() throws IOException {
         Usuario dest = null;
         Paquete p = new Paquete(user, dest, "");
-        p.send(Util.IP_SERVIDOR(), Util.PUERTO_SERVIDOR());
+        //p.send(Util.IP_SERVIDOR(), Util.PUERTO_SERVIDOR());
+        p.send("192.168.1.34", 9000);
     }
 
     private void initComponents() {
@@ -92,7 +93,8 @@ public class Cliente extends JFrame {
         try {
             Paquete p = new Paquete(user, destino, txtMensaje.getText());
             chat.append("Yo: " + txtMensaje.getText() + "\n");
-            p.send(Util.IP_SERVIDOR(), Util.PUERTO_SERVIDOR());
+            //p.send(Util.IP_SERVIDOR(), Util.PUERTO_SERVIDOR());
+            p.send("192.168.1.34", 9000);
             txtMensaje.setText("");
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -105,7 +107,7 @@ public class Cliente extends JFrame {
         Paquete paqueteEntrada;
 
         try {
-            servidorCliente = new ServerSocket(Util.PUERTO_CLIENTE());
+            servidorCliente = new ServerSocket(9999);
             while (true) {
                 socketRecibido = servidorCliente.accept();
                 ObjectInputStream datosEntrada = new ObjectInputStream(socketRecibido.getInputStream());

@@ -17,7 +17,7 @@ public class Util {
 
     private static final int PUERTO_CLIENTE = 9999;
     private static final int PUERTO_SERVIDOR = 9000;
-    private static final String IP_SERVIDOR = getIp();
+    private static final String IP_SERVIDOR = "192.168.1.34";
 
     public static int PUERTO_CLIENTE() {
         return PUERTO_CLIENTE;
